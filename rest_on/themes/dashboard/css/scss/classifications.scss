@@ -1,0 +1,126 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 28, 2016, 9:45:00 PM
+    Author     : yilveru
+*/
+$grey: lighten(#000, 88%);
+$grey-2: lighten(#000, 98%);
+$grey-3: lighten(#000, 90%);
+#classification-form{
+  .content-products .content-wharehouses{
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 1;
+  }
+  .parent-display{
+    padding: 0 4px;
+  }
+  .display-product .display-wharehouse{
+    border-right: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 7px 10px 5px 10px;
+    label{
+      cursor: pointer;
+      width: 100%;
+      input[type='checkbox']{
+        display: inline-block; 
+        width: 20px !important;
+        vertical-align: middle;
+      }
+      img{
+        display: inline-block;
+        vertical-align: top;
+      }
+      .small{
+        vertical-align: middle;
+        text-align: center;
+        width: 54%;
+        text-align: left;
+        margin-top: 6px;
+        &.small{
+          display: inline-block;
+          font-size: 1rem;
+        }
+        h3{
+          margin: 0;
+          font-size: 1.3rem;
+          transition: all 0.3s;
+          font-weight: 600;
+          span{
+            font-size: 0.9em;
+            font-weight: normal;
+            width: 100%;
+            display: block;
+          }
+        }
+      }
+      .toogle-check{
+        display: inline-block;
+      }
+    }
+    &:nth-child(4n+0){
+      border-right: none;
+    }
+    &:hover{
+      label{
+        .small{
+          h3{
+            text-shadow: 1px 1px 5px #6d6d6d
+          }
+        }
+      }
+    }
+  }
+}
+
+.default-3d{
+  position: relative;
+  border: 0 !important;
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold !important;
+  -webkit-border-radius: 10px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 10px;
+  -moz-background-clip: padding;
+  border-radius: 10px;
+  background-clip: padding-box;
+  -webkit-transition: all 50ms ease;
+  -moz-transition: all 50ms ease;
+  -o-transition: all 50ms ease; 
+  transition: all 50ms ease;
+  border: 0;
+  text-shadow: 0px 1px 0px $grey;
+  background-color: $grey-2;
+  -webkit-box-shadow: 0px 6px 0px $grey;
+  -moz-box-shadow: 0px 6px 0px $grey;
+  box-shadow: 0px 6px 0px $grey;
+  &:focus {
+    outline: 0;
+  }
+  &:hover, &.active {
+    top: 2px;
+    border: 0;
+    background-color: $grey-3 !important;
+    -webkit-box-shadow: 0px 4px 0px $grey;
+    -moz-box-shadow: 0px 4px 0px $grey;
+    box-shadow: 0px 4px 0px $grey;
+  }
+  &:active {
+    top: 6px;
+    -webkit-box-shadow: inset 0px 3px 0px $grey;
+    -moz-box-shadow: inset 0px 3px 0px $grey;
+    box-shadow: inset 0px 3px 0px $grey;
+  }
+}
+
+@media (max-width: 768px){
+  .toogle-check{
+    float: right;
+    margin-top: 10px;
+  }
+}

@@ -1,0 +1,91 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 28, 2016, 9:45:00 PM
+    Author     : yilveru
+*/
+$grey: lighten(#000, 88%);
+$grey-2: lighten(#000, 98%);
+$grey-3: lighten(#000, 90%);
+
+.view-options{
+  label{
+    display: inline-block;
+    background-color: $grey;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+    width: 39px;
+    height: 27px;
+    border: 0; 
+    border-radius: 0;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    -webkit-transition: background-color 400ms; 
+    transition: background-color 400ms;
+    input[type='radio']{
+      visibility: hidden;
+      /*width: 20px !important;*/ 
+    }
+    &.type12{
+      background-image: url('../images/12.png');
+    }
+    &.type3333{
+      background-image: url('../images/3333.png');
+    }
+    &.type222222{
+      background-image: url('../images/222222.png');
+    }
+    &:hover, &.active{
+      background-color: darken($grey,  15%);
+      cursor: pointer;
+    }
+  }
+}
+
+#Inventories_wrapper{
+  .thumbnail{
+    h3{
+      font-size: 1.1em;
+      font-weight: bold;
+      margin: 0;
+      min-height: 40px;
+    }
+    .category{
+      color: #777;
+      font-size: 0.8em;
+      height: 40px;
+    }
+  }
+}
+
+.pagination{
+  .disabled{
+    display: none;
+  }
+}
+select{
+  /*-webkit-appearance:none;*/
+}
+
+/*modal product*/
+#modal-product{
+  .modal-dialog{
+    max-height: 400px;
+    .tab-content{
+      min-height: 370px;
+      .price-modal{
+        color: #367fa9;
+        font-size: 1.2em;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px){
+
+
+}

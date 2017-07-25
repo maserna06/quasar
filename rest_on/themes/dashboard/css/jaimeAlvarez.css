@@ -1,0 +1,225 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25/11/2016, 04:21:32 PM
+    Author     : jaime
+*/
+
+#modal_0 .modal-dialog {    
+    min-width: 80%;
+   
+}
+
+#modal_0 .modal-dialog .tab-content {
+    min-height: 600px;
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+
+
+#purchases-list .purchase, #purchases-list-filtered .purchase,
+#sales-list .purchase, #sales-list-filtered .purchase{
+    min-height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2%;
+    margin-top: 10px;
+}
+
+.purchase-label {
+    font-weight: bold;
+}
+
+.purchase-info {
+    background: rgba(192,192,192,0.2);
+    margin: 3px;
+    padding: 10px;
+}
+
+.purchase-remarks {
+    margin-top: 10px;
+    height: 20px;
+    overflow-y: auto;
+    margin-bottom: 5px;
+    width: auto;
+    font-size: 0.85em;
+    text-align: justify;
+    color: #999;
+    width: 95%;
+    margin-left: 5px;
+}
+
+.purchase a {
+    margin-top: 10px;
+    width: 90%;
+}
+
+.purchase-title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.purchase-title i  {
+    font-size: 8px/12px;
+}
+
+#purchase_company_logo img, #sale_company_logo img{
+    max-width: 100px;
+}
+
+#purchase-invoice {
+    text-align: right;
+}
+
+#purchase-invoice-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#purchase-invoice-number {
+    font-weight: bold;
+}
+
+#purchases-details {
+    min-height: 300px;
+}
+
+#purchases-details-info {
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#purchases-details-info-title {
+    min-height: 20px;
+    font-weight: bold;
+    background: #3c8dbc;
+}
+
+#purchases-details-info p {
+    font-weight: bold;
+}
+
+/*
+#purchases-details thead { float:left; margin: 0; }
+#purchases-details tbody { float:left; margin: 0; height:300px; overflow:auto;}
+
+*/
+/*
+#purchases-details thead, #purchases-details tbody { display: block; }
+
+#purchases-details tbody {
+    height: 300px;      
+    overflow-y: auto;   
+    overflow-x: hidden;  
+}*/
+
+
+#product-details-grid table {
+    /* width: 100%; */ /* Optional */
+    /* border-collapse: collapse; */
+    border-spacing: 0;
+}
+
+#product-details-grid table tbody,
+#product-details-grid table thead { display: block; }
+
+
+
+#product-details-grid table tbody {
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+#purchase-totals p{
+    font-weight: bold;
+}
+
+#bank-details {
+    border: 1px solid #d9edf7;
+    min-height: 180px;
+    margin-bottom: 10px;
+}
+
+.purchases-details-info-title {
+    text-align: center;
+    background: #3c8dbc;
+    color: #fff;
+    padding: 5px 0 5px 0;
+    font-weight: bold;
+}
+
+#bank-details-content {
+       border: 1px solid #ddd;
+}
+
+#bank-details-content-table {
+    min-height: 50px;
+}
+
+#bank-details-content-table th {
+    text-align: center;
+}
+
+.modal-search {
+    margin: 10px 10px 0 0;
+}
+
+
+#users-list .user, #users-list-filtered .user
+{
+    min-height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2%;
+    margin-top: 10px;
+}
+
+
+#users-list .user-info, #users-list-filtered .user-info {
+    margin-top: 10px;
+    max-height: 200px;
+    margin-bottom: 10px;
+    padding-right: auto;
+    text-align: center;
+}
+
+.user-info .user-name {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+ 
+.user-photo {
+    min-height: 100px;
+    margin-bottom: 10px;
+}
+
+
+.user-photo img {
+    height: 100px;
+    width: auto;   
+}
+
+.user-info .user-roles, .user-info .user-name{
+    min-height: 30px;
+    max-height: 30px;
+    overflow-y: auto;
+}
+
+.sales-details-info-title {    
+    text-align: center;
+    background: #00a65a;
+    color: #fff;
+    padding: 5px 0 5px 0;
+    font-weight: bold;
+}
+

@@ -1,0 +1,14 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 5/10/2016, 03:43:58 AM
+    Author     : Ximena
+*/
+ul.pagination .selected a {
+    background: #2e6ab1;
+    color: #FFFFFF;
+    font-weight: bold;
+}

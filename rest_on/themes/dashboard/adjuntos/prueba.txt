@@ -1,0 +1,5 @@
+Ventana modal sin empresa y bloquear botones
+Relaciones en config account
+Validación Consecutivo
+Consecutivo visual(consultar la configuración)
+

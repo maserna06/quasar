@@ -1,0 +1,65 @@
+/*
+ Created by Diego Castro <diego.castro@knowbi.com>
+*/
+/* 
+    Created on : Nov 3, 2016, 8:52:21 PM
+    Author     : Diego Castro <diego.castro@knowbi.com>
+*/
+
+.page-error{
+  .content{
+    margin-top: 50px;
+  }
+  h3{
+    i{
+      float:left;
+    }
+    p{
+      margin-left: 30px;
+    }
+  }
+}
+
+.sidebar-mini.sidebar-collapse.touch-device .sidebar-menu>li:hover>a>span:not(.pull-right),
+.sidebar-mini.sidebar-collapse.touch-device .sidebar-menu>li:hover>.treeview-menu{
+  display: block !important;
+  position: absolute;
+  width: 180px;
+  left: 50px;
+}
+
+
+@media print {
+  #impuestos{
+    display: block !important;
+    a[href]:after{
+      display: none !important;
+    }
+  }
+  #section-to-print.invoice{
+    padding: 7px;
+  }
+  #datos-taxes{
+    h4{
+      padding-left:5px;
+      margin:0 0 5px;
+      font-size:15px;
+      &:after{
+        content: '';
+        display: table;
+        clear: both;
+      }
+      a.btn-success, a.btn-danger{
+        margin-right: 5px;
+        padding: 2px 8px;
+      }
+    }
+    hr{
+      display: none;
+    }
+    ul > li .col-sm-4{
+      width: 33%;
+      float:left;
+    }
+  }
+}
