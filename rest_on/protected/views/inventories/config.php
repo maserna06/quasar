@@ -6,7 +6,7 @@ $empresa = Yii::app()->getSession()->get('empresa');
 ?>
 <section class="content">
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-4">
 
             <div class="box box-info">
                 <div class="box-header">
@@ -89,7 +89,7 @@ $empresa = Yii::app()->getSession()->get('empresa');
             </div><!-- /.box-body -->
         </div><!-- /.box -->
 
-        <div class="col-xs-6">
+     <div class="col-xs-4">
       <div class="box box-info">
         <div class="box-header">
           <h3 class="box-title">Producto Terminado <small>:: Configuracion</small></h3>
@@ -144,6 +144,62 @@ $empresa = Yii::app()->getSession()->get('empresa');
                                 </div>
                                 <div class="form-group pull-right">  
             <?php echo CHtml::button($model1->isNewRecord ? 'Guardar' : 'Actualizar', array('class' => 'btn btn-block btn-success', 'onclick' => 'send(2);', 'disabled' => ($empresa == 0) ? 'disabled' : '')); ?>
+                                </div>
+
+                            <?php $this->endWidget(); ?>
+                            </div>
+
+                                         
+                    </div>
+                </div>
+                
+            </div>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
+<!-- Miguel posada 25-07-2017  -->
+  <div class="col-xs-4">
+      <div class="box box-info">
+        <div class="box-header">
+          <h3 class="box-title">Inventarios <small>:: Configuracion</small></h3>
+        </div>
+        <br> 
+        <div class="box-body" style="min-height: 500px;">            
+            
+            <div class="row">
+                    <div class="col-sm-12">
+                       
+                            <div class="form">                           
+                            <?php $form=$this->beginWidget('CActiveForm', array(
+                                'id'=>'configFinishedProduct-form',
+                                'htmlOptions' => array("class" => "form",
+                                    'onsubmit' => "return false;", /* Disable normal form submit */
+                                ),
+                                // Please note: When you enable ajax validation, make sure the corresponding
+                                // controller action is handling ajax validation correctly.
+                                // There is a call to performAjaxValidation() commented in generated controller code.
+                                // See class documentation of CActiveForm for details on this.
+                                'enableAjaxValidation'=>false,
+                                'enableClientValidation' => true,
+                                'clientOptions' => array(
+                                    'validateOnSubmit' => true,
+                                    'validateOnChange' => true,
+                                    'validateOnType' => true,
+                                ),
+                            )); ?>
+                              
+                                
+                                <div class="form-group">
+                                    <p><label for="exampleInputEmail1">Ficha Tecnica</label></p>                                       
+                                     
+                                    <input name="ReferralConfig[referralP_payment]" id ="ReferralConfig_referralP_payment" class="form-control" type="checkbox" data-toggle="toggle" data-on="Si" data-off="No" data-onstyle="success" data-offstyle="danger" <?php echo ($model2->referralP_payment == 1) ? 'checked' : '';?>>
+                                    <p><small id="emailHelp" class="form-text text-muted">Aplica Ficha Tecnica en Productos.</small></p>
+                                    <br><?php echo $form->error($model1, 'finished_product_format', array('class' => 'alert alert-danger')); ?>
+                                </div>
+                        
+                               
+                                <div class="form-group pull-right">  
+                                <?php echo CHtml::button($model1->isNewRecord ? 'Guardar' : 'Actualizar', array('class' => 'btn btn-block btn-success', 'onclick' => 'send(2);', 'disabled' => ($empresa == 0) ? 'disabled' : '')); ?>
                                 </div>
 
                             <?php $this->endWidget(); ?>
