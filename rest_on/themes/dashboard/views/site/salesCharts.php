@@ -18,7 +18,7 @@ $this->Widget('ext.highcharts.HighchartsWidget', array(
             'plotBorderWidth' => null,
             'plotShadow' => false,
             'height' => 250,
-        ),
+        ), 
     ),
 ));
 ?>
