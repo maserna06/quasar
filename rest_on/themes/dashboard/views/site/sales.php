@@ -1,7 +1,6 @@
 <?php
 
 use App\User\User as U;
-
 $user = U::getInstance();
 
 if ($user->isSuper) {
@@ -18,7 +17,6 @@ if ($user->isSuper) {
     }
 }
 
-
 $sales = new CActiveDataProvider('Sales', array(
     'criteria' => array(
         'condition' => $condition,
@@ -31,6 +29,7 @@ $sales = new CActiveDataProvider('Sales', array(
     )
         ));
 ?>
+
 <style type="text/css">
 
     .modal {

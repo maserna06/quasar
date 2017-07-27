@@ -1,8 +1,7 @@
-
 <?php
 $this->Widget('ext.highcharts.HighchartsWidget', array(
     'options' => array(
-        'title' => array('text' => $title),
+        'title' => array('text' => '-'),
         'xAxis' => array(
             'categories' => array('Semana 1', 'Semana 2', 'Semana 3')
         ),
@@ -18,7 +17,7 @@ $this->Widget('ext.highcharts.HighchartsWidget', array(
             'plotBorderWidth' => null,
             'plotShadow' => false,
             'height' => 250,
-        ), 
+        ),
     ),
 ));
 ?>
