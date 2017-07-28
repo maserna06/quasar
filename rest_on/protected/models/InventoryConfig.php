@@ -13,7 +13,7 @@
  * The followings are the available model relations:
  * @property Companies $company
  */
-class Config extends CActiveRecord
+class InventoryConfig extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name

@@ -315,10 +315,18 @@ class InventoriesController extends Controller {
             $model1 = FinishedProductConfig::model()->findByPk($id1);
             $model1->scenario = 'existe';//se decalra scenario para validar si se realiza cambio en el numero.
         }
+        //Miguel p 27-07-2017
+        $id2 = FinishedInventoryConfigExtend::finishedinventoryCreate();
+        /*if (!$id2) {
+            $model2 = new InventoryConfig;
+        } else {
+            $model2 = InventoryConfig::model()->findByPk($id1);
+            $model2->scenario = 'existe';//se decalra scenario para validar si se realiza cambio en el numero.
+        }*/
 
        
         // Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation(array($model, $model1));
+        $this->performAjaxValidation(array($model, $model1, $model2));
 
         if (isset($_POST['TransferConfig'])) {
             $model->attributes = $_POST['TransferConfig'];
@@ -362,10 +370,34 @@ class InventoriesController extends Controller {
             exit;
         }
 
+        /*miguel p 27-07-2017*/
+
+        if (isset($_POST['FinishedInventoryConfig'])) {
+            //print_r($_POST);exit;
+            $model2->attributes = $_POST['FinishedInventoryConfig'];
+            if ($model2->save()) {
+                $datosConf = array('estado' => 'success', 'mensaje' => 'Configuración para Inventario guardada con éxito.');
+            } else {
+                $error = $model2->errors;
+                $key_error = array_keys($error);
+                $msj = '';
+                foreach ($key_error as $key) {
+                    $errores = $error[$key];
+                    foreach ($errores as $value) {
+                        $msj.= "$key = " . $value . "<br>";
+                    }
+                }
+                $datosConf = array('estado' => 'danger', 'mensaje' => 'No se completo el proceso de inventario.<br>'.$msj);
+            }
+            print_r(json_encode($datosConf));
+            exit;
+        }
+
 
         $this->render('config', array(
             'model' => $model,
             'model1' => $model1,
+            'model2' => $model2,
         ));
     }
 

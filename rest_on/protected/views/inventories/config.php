@@ -171,7 +171,7 @@ $empresa = Yii::app()->getSession()->get('empresa');
                        
                             <div class="form">                           
                             <?php $form=$this->beginWidget('CActiveForm', array(
-                                'id'=>'configFinishedProduct-form',
+                                'id'=>'configFinishedInventory-form',
                                 'htmlOptions' => array("class" => "form",
                                     'onsubmit' => "return false;", /* Disable normal form submit */
                                 ),
@@ -199,7 +199,7 @@ $empresa = Yii::app()->getSession()->get('empresa');
                         
                                
                                 <div class="form-group pull-right">  
-                                <?php echo CHtml::button($model1->isNewRecord ? 'Guardar' : 'Actualizar', array('class' => 'btn btn-block btn-success', 'onclick' => 'send(2);', 'disabled' => ($empresa == 0) ? 'disabled' : '')); ?>
+                                <?php echo CHtml::button($model1->isNewRecord ? 'Guardar' : 'Actualizar', array('class' => 'btn btn-block btn-success', 'onclick' => 'send(3);', 'disabled' => ($empresa == 0) ? 'disabled' : '')); ?>
                                 </div>
 
                             <?php $this->endWidget(); ?>
@@ -225,9 +225,13 @@ $empresa = Yii::app()->getSession()->get('empresa');
         if (form == 1) {
             url = $("#configTransfer-form").attr('action');
             data = $("#configTransfer-form").serialize();
-        } else{
+        } else if (form == 2){
             url = $("#configFinishedProduct-form").attr('action');
             data = $("#configFinishedProduct-form").serialize();
+            //Miguel p 27-07=2017
+        }else if (form == 3){
+            url = $("#configFinishedInventory-form").attr('action');
+            data = $("#configFinishedInventory-form").serialize();
         }
         if (!hasError) {
             // No errors! Do your post and stuff
