@@ -392,10 +392,8 @@ class WharehousesController extends Controller {
     $this->performAjaxValidation($model);
     
     //Validate Save
-    if($model->save()){
-      $userData = User::model()->findByPk($user_id);
-      $datosConf = array('estado' => 'success', 'mensaje' => 'Vendedor configurado con exito.', 'multicash' => $multicash, 'user_id' => $user_id, 'user_name'=>$userData['user_name'], 'user_firtsname'=>$userData['user_firtsname'], 'user_lastname'=>$userData['user_lastname'], 'user_status'=>$userData['user_status'], 'link'=> CHtml::link("On", array("wharehouses/removeuser", "id" => $wharehouse_id, "item" => $userData['user_id']), array("class" => "btn btn-success pull-right")));
-    }
+    if($model->save())
+      $datosConf = array('estado' => 'success', 'mensaje' => 'Vendedor configurado con exito.', 'id' => $wharehouse_id, "users" => WharehousesExtend::getUsersByWharehouses($wharehouse_id), 'multicash' => $multicash);
     else{
       echo $model->getErrors();
       $datosConf = array('estado' => 'danger', 'mensaje' => 'Datos de configuración vacios; campos marcados con ( * ) son obligatorios.');

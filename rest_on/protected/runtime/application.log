@@ -4903,3 +4903,21 @@ Stack trace:
 REQUEST_URI=/quasar/rest_on/site/login
 HTTP_REFERER=http://localhost/quasar/rest_on/site/login
 ---
+2017/07/28 11:25:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "42753833/wharehouses/removeuser/1"' in C:\xampp\htdocs\quasar\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\xampp\htdocs\quasar\framework\web\CWebApplication.php(141): CWebApplication->runController('42753833/whareh...')
+#1 C:\xampp\htdocs\quasar\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\quasar\rest_on\index.php(19): CApplication->run()
+#3 {main}
+REQUEST_URI=/quasar/rest_on/42753833/wharehouses/removeuser/1?item=42753833
+HTTP_REFERER=http://localhost/quasar/rest_on/wharehouses/1
+---
+2017/07/28 11:36:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "42753833/wharehouses/removeuser/1"' in C:\xampp\htdocs\quasar\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\xampp\htdocs\quasar\framework\web\CWebApplication.php(141): CWebApplication->runController('42753833/whareh...')
+#1 C:\xampp\htdocs\quasar\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\quasar\rest_on\index.php(19): CApplication->run()
+#3 {main}
+REQUEST_URI=/quasar/rest_on/42753833/wharehouses/removeuser/1?item=42753833
+HTTP_REFERER=http://localhost/quasar/rest_on/wharehouses/1
+---

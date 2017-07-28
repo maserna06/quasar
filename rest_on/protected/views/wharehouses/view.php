@@ -85,7 +85,7 @@ foreach ($users as $user){
       <div id="inner-content-users">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
-          <table class="table table-striped table-bordered" id="edit-wharehouses-users">
+          <table class="table table-striped table-bordered" id="head-edit-wharehouses-users">
             <thead>
               <tr class="tblEncabezado">
                 <th>Id</th>
@@ -142,20 +142,54 @@ foreach ($users as $user){
   //Is Multicash
   function isMulticash(datos)
   {
+    //Clear General Config and Table Vendors
     $('.btnGeneral').html("");
+    $('#edit-wharehouses-users').html("");
+    //Create Table Vendors with Config
     $('.tblEncabezado').html("<th>Id</th><th>Usuario</th><th>Nombre</th><th>Estado</th><th>Config</th><th></th>");
-    var $rowUser = '<td>' + datos['user_id'] + '</td>';
-    $rowUser += '<td>' + datos['user_name'] + '</td>';
-    $rowUser += '<td>' + datos['user_firtsname'] + ' ' + datos['user_lastname'] + '</td>';
-    $rowUser += '<td>' + (datos['user_status'] ? 'Activo' : 'Inactivo') + '</td>';
-    $rowUser += "<td><i name='btn_configU' id='"+ datos['user_id'] +"' class='fa fa-gears'></i></td>";
-    $rowUser += '<td>' + datos['link'] + '</td>';
-    $('.'+ datos['user_id']).html($rowUser);
+    $.each(datos['users'], function( i, val )
+    {
+      var $rowUser = '<tr class="' + val.user_id + '">';
+      $rowUser += '<td>' + val.user_id + '</td>';
+      $rowUser += '<td>' + val.user_name + '</td>';
+      $rowUser += '<td>' + val.user_firtsname + ' ' + val.user_lastname + '</td>';
+      $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';
+      if(val.multicash == 1){
+        $('.btnGeneral').html("");
+        $rowUser += "<td><i name='btn_configU' id='"+ val.user_id +"' class='fa fa-gears'></i></td>";
+      }
+      else
+        $('.btnGeneral').html("<i name='btn_configG' class='fa fa-gears configGeneral'></i>");
+      $rowUser += '<td><a class="btn btn-success pull-right" href="'+val.user_id+'/wharehouses/removeuser/'+datos['id']+'?item='+val.user_id+'">On</a></td>';
+      $rowUser += '</tr>';
+      $('#edit-wharehouses-users').append($rowUser);
+    });
   }
 
   //Not Multicash
   function notMulticash(datos)
   {
+    $('#edit-wharehouses-users').html("");
+    //Create Table Vendors not Config
+    $('.tblEncabezado').html("<th>Id</th><th>Usuario</th><th>Nombre</th><th>Estado</th><th></th>");
+    $.each( datos['users'], function( i, val )
+    {
+      var $rowUser = '<tr class="' + val.user_id + '">';
+      $rowUser += '<td>' + val.user_id + '</td>';
+      $rowUser += '<td>' + val.user_name + '</td>';
+      $rowUser += '<td>' + val.user_firtsname + ' ' + val.user_lastname + '</td>';
+      $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';
+      if(val.multicash == 1){
+        $('.btnGeneral').html("");
+        $rowUser += "<td><i name='btn_configU' id='"+ val.user_id +"' class='fa fa-gears'></i></td>";
+      }
+      else
+        $('.btnGeneral').html("<i name='btn_configG' class='fa fa-gears configGeneral'></i>");
+      $rowUser += '<td><a class="btn btn-success pull-right" href="'+val.user_id+'/wharehouses/removeuser/'+datos['id']+'?item='+val.user_id+'">On</a></td>';
+      $rowUser += '</tr>';
+      $('#edit-wharehouses-users').append($rowUser);
+    });
+    //Add General Config
     $('.btnGeneral').html("<i name='btn_configG' class='fa fa-gears configGeneral'></i>");
   }
 
@@ -233,7 +267,7 @@ foreach ($users as $user){
           method: 'post',
           dataType: 'json',
           success: callback
-        });
+        });       
       }
 
       function configWharehouse(multicash)
@@ -269,12 +303,16 @@ foreach ($users as $user){
           $this.removeAttr('disabled');
           if (!response.error) {
             $this.parents('tr').fadeOut(300, function () {
-              $(this).remove();
-            });
+              $(this).remove();              
+            });            
           } else {
             showMessage(response.error);
           }
         });
+        //Delete Object Config General
+        var $haveUsers = $('#edit-wharehouses-users tr');
+        if ($haveUsers.length == 1)
+          $('.btnGeneral').html("");
       });
     }
 
@@ -325,12 +363,14 @@ foreach ($users as $user){
             $rowUser += '<td>' + set.data.user_name + '</td>';
             $rowUser += '<td>' + set.data.user_firtsname + ' ' + set.data.user_lastname + '</td>';
             $rowUser += '<td>' + (set.data.user_status ? 'Activo' : 'Inactivo') + '</td>';
+            //Validate Multicash
             if(set.data.multicash == 1){
               $('.btnGeneral').html("");
               $rowUser += "<td><i name='btn_configU' id='"+ set.data.user_id +"' class='fa fa-gears'></i></td>";
             }
             else
               $('.btnGeneral').html("<i name='btn_configG' class='fa fa-gears configGeneral'></i>");
+
             $rowUser += '<td>' + set.data.link + '</td>';
             $rowUser += '</tr>';
             $autocompleteInput.val('');
