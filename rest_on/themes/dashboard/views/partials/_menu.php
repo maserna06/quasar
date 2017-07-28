@@ -100,6 +100,10 @@ $items = [
         'url'=>array('/categories'),
       ),
       array(
+        'label'=>'<i class="fa fa-circle-o"></i> Procesos',
+        'url'=>array('/process'),
+      ),
+      array(
         'label'=>'<i class="fa fa-circle-o"></i> Productos',
         'url'=>array('/products'),
       ),

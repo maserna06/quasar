@@ -47,7 +47,7 @@ $this->menu = array(
                                             //array('name' => 'deparment_id', 'htmlOptions' => array('style' => 'width: 60px')),
                                             'deparment_cod',
                                             'deparment_name',
-                                             array(
+                                            array(
                                                 'name' => 'deparment_state',
                                                 'filter' => array('1' => 'Activo', '0' => 'Inactivo'),
                                                 'value' => '($data->deparment_state=="1")?("Activo"):("Inactivo")'

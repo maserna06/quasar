@@ -49,7 +49,7 @@ foreach ($users as $user){
       </address>
     </div><!-- /.col -->
     <div class="col-sm-2 invoice-col">
-      <div class="btnGeneral" style="text-align: right;"><?php if($multicash == 0 && $multicash != ''){ echo "<i name='btn_configG' class='fa fa-gears configGeneral'></i>"; } ?></div>
+      <div class="btnGeneral" style="text-align: right;"><?php if($multicash == 0 && $multicash != ''){ echo CHtml::link("", array("wharehouses/configGeneral/", "id" => $model->wharehouse_id), array("class" => "fa fa-gears configGeneral")); } ?></div>
     </div><!-- /.col -->
   </div><!-- /.row -->
   <br>
@@ -103,12 +103,12 @@ foreach ($users as $user){
                   <td><?php echo $user['user_name'] ?></td>
                   <td><?php echo $user['user_firtsname'] . ' ' . $user['user_lastname'] ?></td>
                   <td><?php echo ($user['user_status']) ? 'Activo' : 'Inactivo'; ?></td>
-                  <?php if($multicash == 1 && $multicash != ''){ echo "<td><i name='btn_configU' id='". $user['user_id'] ."' class='fa fa-gears configUser'></i></td>"; } ?>
-                  <td><?php
-                    echo CHtml::link(
-                            "On", array("wharehouses/removeuser", "id" => $model->wharehouse_id, "item" => $user['user_id']), array("class" => "btn btn-success pull-right")
-                    );
-                    ?></td>
+                  <?php if($multicash == 1 && $multicash != ''){ echo "<td class='btnUnit'>".CHtml::link("", array("wharehouses/configUser", "id" => $model->wharehouse_id, "item" => $user['user_id']), array("class" => "fa fa-gears configUser"))."</td>"; } ?>
+                  <td>
+                  <?php
+                    echo CHtml::link("On", array("wharehouses/removeuser", "id" => $model->wharehouse_id, "item" => $user['user_id']), array("class" => "btn btn-success pull-right"));
+                  ?>                      
+                  </td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
@@ -154,13 +154,9 @@ foreach ($users as $user){
       $rowUser += '<td>' + val.user_name + '</td>';
       $rowUser += '<td>' + val.user_firtsname + ' ' + val.user_lastname + '</td>';
       $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';
-      if(val.multicash == 1){
-        $('.btnGeneral').html("");
-        $rowUser += "<td><i name='btn_configU' id='"+ val.user_id +"' class='fa fa-gears'></i></td>";
-      }
-      else
-        $('.btnGeneral').html("<i name='btn_configG' class='fa fa-gears configGeneral'></i>");
-      $rowUser += '<td><a class="btn btn-success pull-right" href="'+val.user_id+'/wharehouses/removeuser/'+datos['id']+'?item='+val.user_id+'">On</a></td>';
+      $rowUser += "<td class='btnUnit'><a class='fa fa-gears configUser' href='<?php echo Yii::app()->createAbsoluteUrl('wharehouses/configUser/'); ?>'></a></td>";      
+      //$rowUser += '<td><a class="btn btn-success pull-right" href="'+val.user_id+'/wharehouses/removeuser/'+datos['id']+'?item='+val.user_id+'">On</a></td>';
+      $rowUser += '<td><a class="btn btn-success pull-right" href="<?php echo Yii::app()->createAbsoluteUrl('wharehouses/removeuser/'); ?>">On</a></td>';
       $rowUser += '</tr>';
       $('#edit-wharehouses-users').append($rowUser);
     });
@@ -178,19 +174,14 @@ foreach ($users as $user){
       $rowUser += '<td>' + val.user_id + '</td>';
       $rowUser += '<td>' + val.user_name + '</td>';
       $rowUser += '<td>' + val.user_firtsname + ' ' + val.user_lastname + '</td>';
-      $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';
-      if(val.multicash == 1){
-        $('.btnGeneral').html("");
-        $rowUser += "<td><i name='btn_configU' id='"+ val.user_id +"' class='fa fa-gears'></i></td>";
-      }
-      else
-        $('.btnGeneral').html("<i name='btn_configG' class='fa fa-gears configGeneral'></i>");
-      $rowUser += '<td><a class="btn btn-success pull-right" href="'+val.user_id+'/wharehouses/removeuser/'+datos['id']+'?item='+val.user_id+'">On</a></td>';
+      $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';      
+      //$rowUser += '<td><a class="btn btn-success pull-right" href="'+val.user_id+'/wharehouses/removeuser/'+datos['id']+'?item='+val.user_id+'">On</a></td>';
+      $rowUser += '<td><a class="btn btn-success pull-right" href="<?php echo Yii::app()->createAbsoluteUrl('wharehouses/removeuser/'); ?>">On</a></td>';
       $rowUser += '</tr>';
       $('#edit-wharehouses-users').append($rowUser);
     });
     //Add General Config
-    $('.btnGeneral').html("<i name='btn_configG' class='fa fa-gears configGeneral'></i>");
+    $('.btnGeneral').html("<a class='fa fa-gears configUser' href='<?php echo Yii::app()->createAbsoluteUrl('wharehouses/configGeneral/'); ?>'></a>");
   }
 
   //Send Data
@@ -229,17 +220,14 @@ foreach ($users as $user){
   jQuery(function ($) {
     var $saveBtn = $('#saveVendor');
     var userVendor = null, wharehouseVendor = null;
-
     $('.to-canvas').on('click', function () {
       var invoice = $('.invoice');
       $('.no-print').hide();
-
       Modal.show('Generando archivo PDF...<br /> Debe habilitar las ventanas emergentes para poder visualizarlo.');
       html2canvas(invoice[0], {
         onrendered: function (canvas) {
           Modal.show('El achivo se ha generado correctamente. <br />Si no lo visualiza debe habilitar las ventanas emergentes.');
           $('.no-print').show();
-
           var form = document.form_save_pdf;
           form.image.value = canvas.toDataURL("image/png");
           form.submit();
@@ -366,10 +354,10 @@ foreach ($users as $user){
             //Validate Multicash
             if(set.data.multicash == 1){
               $('.btnGeneral').html("");
-              $rowUser += "<td><i name='btn_configU' id='"+ set.data.user_id +"' class='fa fa-gears'></i></td>";
+              $rowUser += "<td class='btnUnit'><a class='fa fa-gears configUser' href='<?php echo Yii::app()->createAbsoluteUrl('wharehouses/configUser/'); ?>'></a></td>";
             }
             else
-              $('.btnGeneral').html("<i name='btn_configG' class='fa fa-gears configGeneral'></i>");
+              $('.btnGeneral').html("<a class='fa fa-gears configUser' href='<?php echo Yii::app()->createAbsoluteUrl('wharehouses/configGeneral/'); ?>'></a>");
 
             $rowUser += '<td>' + set.data.link + '</td>';
             $rowUser += '</tr>';
