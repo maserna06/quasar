@@ -75,14 +75,14 @@ class Suppliers extends CActiveRecord{
     // NOTE: you may need to adjust the relation name and the related
     // class name for the relations automatically generated below.
     return array(
-      'tblOrders'=>array(self::HAS_MANY,'TblOrder','supplier_nit'),
-      'tblPurchases'=>array(self::HAS_MANY,'TblPurchases','supplier_nit'),
-      'deparment'=>array(self::BELONGS_TO,'TblDepartaments','deparment_id'),
-      'city'=>array(self::BELONGS_TO,'TblCities','city_id'),
-      'bankNit'=>array(self::BELONGS_TO,'TblBanks','bank_nit'),
-      'supplierDocumentType'=>array(self::BELONGS_TO,'TblDocumentType','supplier_document_type'),
-      'priceList'=>array(self::BELONGS_TO,'TblPriceList','price_list_id'),
-      'tblTaxesSuppliers'=>array(self::HAS_MANY,'TblTaxesSupplier','supplier_nit'),
+      'Orders'=>array(self::HAS_MANY,'Order','supplier_nit'),
+      'Purchases'=>array(self::HAS_MANY,'Purchases','supplier_nit'),
+      'deparment'=>array(self::BELONGS_TO,'Departaments','deparment_id'),
+      'city'=>array(self::BELONGS_TO,'Cities','city_id'),
+      'bankNit'=>array(self::BELONGS_TO,'Banks','bank_nit'),
+      'supplierDocumentType'=>array(self::BELONGS_TO,'DocumentType','supplier_document_type'),
+      'priceList'=>array(self::BELONGS_TO,'PriceList','price_list_id'),
+      'TaxesSuppliers'=>array(self::HAS_MANY,'TaxesSupplier','supplier_nit'),
       'ReferralsP' => array(self::HAS_MANY, 'ReferralsP', 'supplier_nit'),
     );
   }

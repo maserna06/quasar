@@ -51,9 +51,9 @@ class PriceList extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblCustomers' => array(self::HAS_MANY, 'TblCustomers', 'price_list_id'),
-			'tblProductLists' => array(self::HAS_MANY, 'TblProductList', 'price_id'),
-			'tblSuppliers' => array(self::HAS_MANY, 'TblSuppliers', 'price_list_id'),
+			'Customers' => array(self::HAS_MANY, 'Customers', 'price_list_id'),
+			'ProductLists' => array(self::HAS_MANY, 'ProductList', 'price_id'),
+			'Suppliers' => array(self::HAS_MANY, 'Suppliers', 'price_list_id'),
 		);
 	}
 

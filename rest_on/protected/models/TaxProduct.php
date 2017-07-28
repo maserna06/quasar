@@ -45,8 +45,8 @@ class TaxProduct extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tax' => array(self::BELONGS_TO, 'TblTaxes', 'tax_id'),
-			'product' => array(self::BELONGS_TO, 'TblProducts', 'product_id'),
+			'tax' => array(self::BELONGS_TO, 'Taxes', 'tax_id'),
+			'product' => array(self::BELONGS_TO, 'Products', 'product_id'),
 		);
 	}
 

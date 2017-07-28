@@ -50,9 +50,9 @@ class Components extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'baseProduct' => array(self::BELONGS_TO, 'TblProducts', 'base_product_id'),
-			'product' => array(self::BELONGS_TO, 'TblProducts', 'product_id'),
-			'unit' => array(self::BELONGS_TO, 'TblUnit', 'unit_id'),
+			'baseProduct' => array(self::BELONGS_TO, 'Products', 'base_product_id'),
+			'product' => array(self::BELONGS_TO, 'Products', 'product_id'),
+			'unit' => array(self::BELONGS_TO, 'Unit', 'unit_id'),
 		);
 	}
 

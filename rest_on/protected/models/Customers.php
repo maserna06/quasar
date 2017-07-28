@@ -71,12 +71,12 @@ class Customers extends CActiveRecord{
     // NOTE: you may need to adjust the relation name and the related
     // class name for the relations automatically generated below.
     return array(
-      'deparment'=>array(self::BELONGS_TO,'TblDepartaments','deparment_id'),
-      'city'=>array(self::BELONGS_TO,'TblCities','city_id'),
-      'bankNit'=>array(self::BELONGS_TO,'TblBanks','bank_nit'),
-      'customerDocumentType'=>array(self::BELONGS_TO,'TblDocumentType','customer_document_type'),
-      'priceList'=>array(self::BELONGS_TO,'TblPriceList','price_list_id'),
-      'tblTaxesCustomers'=>array(self::HAS_MANY,'TblTaxesCustomer','customer_nit'),
+      'deparment'=>array(self::BELONGS_TO,'Departaments','deparment_id'),
+      'city'=>array(self::BELONGS_TO,'Cities','city_id'),
+      'bankNit'=>array(self::BELONGS_TO,'Banks','bank_nit'),
+      'customerDocumentType'=>array(self::BELONGS_TO,'DocumentType','customer_document_type'),
+      'priceList'=>array(self::BELONGS_TO,'PriceList','price_list_id'),
+      'TaxesCustomers'=>array(self::HAS_MANY,'TaxesCustomer','customer_nit'),
     );
   }
 

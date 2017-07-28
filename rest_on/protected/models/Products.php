@@ -70,13 +70,13 @@ class Products extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblComponents' => array(self::HAS_MANY, 'TblComponents', 'product_id'),
-			'tblInventories' => array(self::HAS_MANY, 'TblInventories', 'product_id'),
-			'tblProductLists' => array(self::HAS_MANY, 'TblProductList', 'product_id'),
-			'category' => array(self::BELONGS_TO, 'TblCategories', 'category_id'),
-			'company' => array(self::BELONGS_TO, 'TblCompanies', 'company_id'),
-			'unit' => array(self::BELONGS_TO, 'TblUnit', 'unit_id'),
-			'tblTaxProducts' => array(self::HAS_MANY, 'TblTaxProduct', 'product_id'),
+			'Components' => array(self::HAS_MANY, 'Components', 'product_id'),
+			'Inventories' => array(self::HAS_MANY, 'Inventories', 'product_id'),
+			'ProductLists' => array(self::HAS_MANY, 'ProductList', 'product_id'),
+			'category' => array(self::BELONGS_TO, 'Categories', 'category_id'),
+			'company' => array(self::BELONGS_TO, 'Companies', 'company_id'),
+			'unit' => array(self::BELONGS_TO, 'Unit', 'unit_id'),
+			'TaxProducts' => array(self::HAS_MANY, 'TaxProduct', 'product_id'),
 		);
 	}
 

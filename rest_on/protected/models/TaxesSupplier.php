@@ -45,8 +45,8 @@ class TaxesSupplier extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'supplierNit' => array(self::BELONGS_TO, 'TblSuppliers', 'supplier_nit'),
-			'tax' => array(self::BELONGS_TO, 'TblTaxes', 'tax_id'),
+			'supplierNit' => array(self::BELONGS_TO, 'Suppliers', 'supplier_nit'),
+			'tax' => array(self::BELONGS_TO, 'Taxes', 'tax_id'),
 		);
 	}
 

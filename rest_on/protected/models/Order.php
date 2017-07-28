@@ -57,11 +57,11 @@ class Order extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'supplierNit' => array(self::BELONGS_TO, 'TblSuppliers', 'supplier_nit'),
-			'user' => array(self::BELONGS_TO, 'TblUser', 'user_id'),
-			'accounts' => array(self::BELONGS_TO, 'TblAccounts', 'accounts_id'),
-			'tblOrderDetails' => array(self::HAS_MANY, 'TblOrderDetails', 'order_id'),
-			'tblPurchases' => array(self::HAS_MANY, 'TblPurchases', 'order_id'),
+			'supplierNit' => array(self::BELONGS_TO, 'Suppliers', 'supplier_nit'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'accounts' => array(self::BELONGS_TO, 'Accounts', 'accounts_id'),
+			'OrderDetails' => array(self::HAS_MANY, 'OrderDetails', 'order_id'),
+			'Purchases' => array(self::HAS_MANY, 'Purchases', 'order_id'),
 			'ReferralsP' => array(self::HAS_MANY, 'ReferralsP', 'order_id'),
 		);
 	}

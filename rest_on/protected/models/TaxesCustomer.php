@@ -45,8 +45,8 @@ class TaxesCustomer extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'customerNit' => array(self::BELONGS_TO, 'TblCustomers', 'customer_nit'),
-			'tax' => array(self::BELONGS_TO, 'TblTaxes', 'tax_id'),
+			'customerNit' => array(self::BELONGS_TO, 'Customers', 'customer_nit'),
+			'tax' => array(self::BELONGS_TO, 'Taxes', 'tax_id'),
 		);
 	}
 

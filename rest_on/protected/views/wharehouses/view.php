@@ -260,9 +260,8 @@ foreach ($users as $user){
       $wharehousesUser.on('click', 'a.btn', function (e) {
         e.preventDefault();
         var $this = $(this),
-                successClass = 'btn-success',
-                dangerClass = 'btn-danger'
-                ;
+        successClass = 'btn-success',
+        dangerClass = 'btn-danger';
         if ($this.attr('disabled') == 'disabled')
           return false;
         $this.attr('disabled', 'disabled');
@@ -305,7 +304,6 @@ foreach ($users as $user){
           currentComponentSelected = ui.item;
           return false;
         }
-
       });
 
       $addVendorBtn.on('click', function (e) {

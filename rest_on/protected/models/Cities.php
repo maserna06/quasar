@@ -52,9 +52,9 @@ class Cities extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'deparmentCod' => array(self::BELONGS_TO, 'TblDepartaments', 'deparment_cod'),
-			'tblCompanies' => array(self::HAS_MANY, 'TblCompanies', 'city_id'),
-			'tblUsers' => array(self::HAS_MANY, 'TblUser', 'city_id'),
+			'deparmentCod' => array(self::BELONGS_TO, 'Departaments', 'deparment_cod'),
+			'Companies' => array(self::HAS_MANY, 'Companies', 'city_id'),
+			'Users' => array(self::HAS_MANY, 'User', 'city_id'),
 		);
 	}
 

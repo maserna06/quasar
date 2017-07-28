@@ -45,7 +45,7 @@ class CompaniesSuppliers extends BaseModel{
     // NOTE: you may need to adjust the relation name and the related
     // class name for the relations automatically generated below.
     return array(
-        'supplier' => array(self::BELONGS_TO, 'TblSuppliers', 'supplier_nit'),
+        'supplier' => array(self::BELONGS_TO, 'Suppliers', 'supplier_nit'),
     );
   }
 

@@ -47,7 +47,7 @@ class Categories extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblProducts' => array(self::HAS_MANY, 'TblProducts', 'category_id'),
+			'Products' => array(self::HAS_MANY, 'Products', 'category_id'),
 		);
 	}
 

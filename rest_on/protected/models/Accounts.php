@@ -48,9 +48,9 @@ class Accounts extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'accountType' => array(self::BELONGS_TO, 'TblTypeAccounts', 'account_type'),
-			'tblTaxes' => array(self::HAS_MANY, 'TblTaxes', 'tax_cta_income'),
-			'tblTaxes1' => array(self::HAS_MANY, 'TblTaxes', 'tax_cta_spending'),
+			'accountType' => array(self::BELONGS_TO, 'TypeAccounts', 'account_type'),
+			'Taxes' => array(self::HAS_MANY, 'Taxes', 'tax_cta_income'),
+			'Taxes1' => array(self::HAS_MANY, 'Taxes', 'tax_cta_spending'),
 		);
 	}
 

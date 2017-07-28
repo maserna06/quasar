@@ -59,9 +59,9 @@ class Inventories extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'wharehouse' => array(self::BELONGS_TO, 'TblWharehouses', 'wharehouse_id'),
-			'product' => array(self::BELONGS_TO, 'TblProducts', 'product_id'),
-			'inventoryUnit' => array(self::BELONGS_TO, 'TblUnit', 'inventory_unit'),
+			'wharehouse' => array(self::BELONGS_TO, 'Wharehouses', 'wharehouse_id'),
+			'product' => array(self::BELONGS_TO, 'Products', 'product_id'),
+			'inventoryUnit' => array(self::BELONGS_TO, 'Unit', 'inventory_unit'),
 		);
 	}
 

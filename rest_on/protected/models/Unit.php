@@ -52,10 +52,10 @@ class Unit extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tbl conversionUnits' => array(self::HAS_MANY, 'Tbl conversionUnit', 'convertion_destination_unit'),
-			'tbl conversionUnits1' => array(self::HAS_MANY, 'Tbl conversionUnit', 'convertion_ base_unit'),
-			'tblComponents' => array(self::HAS_MANY, 'TblComponents', 'unit_id'),
-			'tblInventories' => array(self::HAS_MANY, 'TblInventories', 'inventory_unit'),
+			'conversionUnits' => array(self::HAS_MANY, 'conversionUnit', 'convertion_destination_unit'),
+			'conversionUnits1' => array(self::HAS_MANY, 'conversionUnit', 'convertion_ base_unit'),
+			'Components' => array(self::HAS_MANY, 'Components', 'unit_id'),
+			'Inventories' => array(self::HAS_MANY, 'Inventories', 'inventory_unit'),
 		);
 	}
 

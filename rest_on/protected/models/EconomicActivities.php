@@ -48,7 +48,7 @@ class EconomicActivities extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblTaxes' => array(self::HAS_MANY, 'TblTaxes', 'economic_activity_cod'),
+			'Taxes' => array(self::HAS_MANY, 'Taxes', 'economic_activity_cod'),
 		);
 	}
 

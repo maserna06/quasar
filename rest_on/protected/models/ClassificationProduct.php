@@ -45,8 +45,8 @@ class ClassificationProduct extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'classification' => array(self::BELONGS_TO, 'TblClassification', 'classification_id'),
-			'product' => array(self::BELONGS_TO, 'TblProducts', 'product_id'),
+			'classification' => array(self::BELONGS_TO, 'Classification', 'classification_id'),
+			'product' => array(self::BELONGS_TO, 'Products', 'product_id'),
 		);
 	}
 

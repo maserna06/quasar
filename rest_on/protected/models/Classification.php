@@ -49,7 +49,7 @@ class Classification extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblClassificationProducts' => array(self::HAS_MANY, 'TblClassificationProduct', 'classification_id'),
+			'ClassificationProducts' => array(self::HAS_MANY, 'ClassificationProduct', 'classification_id'),
 		);
 	}
 

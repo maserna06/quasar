@@ -54,10 +54,10 @@ class PurchaseDetails extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'wharehouse' => array(self::BELONGS_TO, 'TblWharehouses', 'wharehouse_id'),
-			'purchase' => array(self::BELONGS_TO, 'TblPurchases', 'purchase_id'),
-			'product' => array(self::BELONGS_TO, 'TblProducts', 'product_id'),
-			'tblPurchaseDetailsTaxes' => array(self::HAS_MANY, 'TblPurchaseDetailsTaxes', 'purchase_details_id'),
+			'wharehouse' => array(self::BELONGS_TO, 'Wharehouses', 'wharehouse_id'),
+			'purchase' => array(self::BELONGS_TO, 'Purchases', 'purchase_id'),
+			'product' => array(self::BELONGS_TO, 'Products', 'product_id'),
+			'PurchaseDetailsTaxes' => array(self::HAS_MANY, 'PurchaseDetailsTaxes', 'purchase_details_id'),
 		);
 	}
 

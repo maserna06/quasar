@@ -47,8 +47,8 @@ class DocumentType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblCustomers' => array(self::HAS_MANY, 'TblCustomers', 'customer_document_type'),
-			'tblSuppliers' => array(self::HAS_MANY, 'TblSuppliers', 'supplier_document_type'),
+			'Customers' => array(self::HAS_MANY, 'Customers', 'customer_document_type'),
+			'Suppliers' => array(self::HAS_MANY, 'Suppliers', 'supplier_document_type'),
 		);
 	}
 

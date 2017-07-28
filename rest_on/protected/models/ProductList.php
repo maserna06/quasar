@@ -45,8 +45,8 @@ class ProductList extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'product' => array(self::BELONGS_TO, 'TblProducts', 'product_id'),
-			'price' => array(self::BELONGS_TO, 'TblPriceList', 'price_id'),
+			'product' => array(self::BELONGS_TO, 'Products', 'product_id'),
+			'price' => array(self::BELONGS_TO, 'PriceList', 'price_id'),
 		);
 	}
 

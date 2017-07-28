@@ -58,11 +58,11 @@ class Purchases extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblPurchaseDetails' => array(self::HAS_MANY, 'TblPurchaseDetails', 'purchase_id'),
-			'order' => array(self::BELONGS_TO, 'TblOrder', 'order_id'),
-			'supplierNit' => array(self::BELONGS_TO, 'TblSuppliers', 'supplier_nit'),
-			'user' => array(self::BELONGS_TO, 'TblUser', 'user_id'),
-			'accounts' => array(self::BELONGS_TO, 'TblAccounts', 'accounts_id'),
+			'PurchaseDetails' => array(self::HAS_MANY, 'PurchaseDetails', 'purchase_id'),
+			'order' => array(self::BELONGS_TO, 'Order', 'order_id'),
+			'supplierNit' => array(self::BELONGS_TO, 'Suppliers', 'supplier_nit'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'accounts' => array(self::BELONGS_TO, 'Accounts', 'accounts_id'),
 		);
 	}
 

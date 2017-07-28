@@ -47,8 +47,8 @@ class OrderDetailsTaxes extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'orderDetails' => array(self::BELONGS_TO, 'TblOrderDetails', 'order_details_id'),
-			'taxes' => array(self::BELONGS_TO, 'TblTaxes', 'taxes_id'),
+			'orderDetails' => array(self::BELONGS_TO, 'OrderDetails', 'order_details_id'),
+			'taxes' => array(self::BELONGS_TO, 'Taxes', 'taxes_id'),
 		);
 	}
 

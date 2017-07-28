@@ -59,12 +59,12 @@ class Taxes extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblTaxProducts' => array(self::HAS_MANY, 'TblTaxProduct', 'tax_id'),
-			'economicActivityCod' => array(self::BELONGS_TO, 'TblEconomicActivities', 'economic_activity_cod'),
-			'taxCtaIncome' => array(self::BELONGS_TO, 'TblAccounts', 'tax_cta_income'),
-			'taxCtaSpending' => array(self::BELONGS_TO, 'TblAccounts', 'tax_cta_spending'),
-			'tblTaxesCustomers' => array(self::HAS_MANY, 'TblTaxesCustomer', 'tax_id'),
-			'tblTaxesSuppliers' => array(self::HAS_MANY, 'TblTaxesSupplier', 'tax_id'),
+			'TaxProducts' => array(self::HAS_MANY, 'TaxProduct', 'tax_id'),
+			'economicActivityCod' => array(self::BELONGS_TO, 'EconomicActivities', 'economic_activity_cod'),
+			'taxCtaIncome' => array(self::BELONGS_TO, 'Accounts', 'tax_cta_income'),
+			'taxCtaSpending' => array(self::BELONGS_TO, 'Accounts', 'tax_cta_spending'),
+			'TaxesCustomers' => array(self::HAS_MANY, 'TaxesCustomer', 'tax_id'),
+			'TaxesSuppliers' => array(self::HAS_MANY, 'TaxesSupplier', 'tax_id'),
 		);
 	}
 

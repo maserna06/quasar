@@ -51,9 +51,9 @@ class Departaments extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblCities' => array(self::HAS_MANY, 'TblCities', 'deparment_cod'),
-			'tblCompanies' => array(self::HAS_MANY, 'TblCompanies', 'deparment_id'),
-			'tblUsers' => array(self::HAS_MANY, 'TblUser', 'deparment_id'),
+			'Cities' => array(self::HAS_MANY, 'Cities', 'deparment_cod'),
+			'Companies' => array(self::HAS_MANY, 'Companies', 'deparment_id'),
+			'Users' => array(self::HAS_MANY, 'User', 'deparment_id'),
 		);
 	}
 

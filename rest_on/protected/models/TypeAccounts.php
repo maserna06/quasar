@@ -44,7 +44,7 @@ class TypeAccounts extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblAccounts' => array(self::HAS_MANY, 'TblAccounts', 'account_type'),
+			'Accounts' => array(self::HAS_MANY, 'Accounts', 'account_type'),
 		);
 	}
 

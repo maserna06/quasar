@@ -49,8 +49,8 @@ class ConversionUnit extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'convertionBaseUnit' => array(self::BELONGS_TO, 'TblUnit', 'convertion_base_unit'),
-			'convertionDestinationUnit' => array(self::BELONGS_TO, 'TblUnit', 'convertion_destination_unit'),
+			'convertionBaseUnit' => array(self::BELONGS_TO, 'Unit', 'convertion_base_unit'),
+			'convertionDestinationUnit' => array(self::BELONGS_TO, 'Unit', 'convertion_destination_unit'),
 		);
 	}
 
