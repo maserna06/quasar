@@ -48,8 +48,10 @@ foreach ($users as $user){
         Tel&eacute;fono: <?php echo $model->wharehouse_phone ?>
       </address>
     </div><!-- /.col -->
-    <div class="col-sm-2 invoice-col">
-      <div class="btnGeneral" style="text-align: right;"><?php if($multicash == 0 && $multicash != ''){ echo CHtml::link("", array("wharehouses/configGeneral/", "id" => $model->wharehouse_id), array("class" => "fa fa-gears configGeneral")); } ?></div>
+    <div class="col-sm-2 invoice-col" style="text-align: right;">
+      <i class="fa fa-gears configGeneral" rel="tooltip" data-toggle="tooltip" data-original-title="Configuración General" style="cursor: pointer; color: #3c8dbc;"></i>
+      <input type="hidden" class="multicash" value="<?php echo ($multicash != '')?$multicash:'#'; ?>">
+      <input type="hidden" class="wharehouse_id" value="<?php echo $model->wharehouse_id; ?>">
     </div><!-- /.col -->
   </div><!-- /.row -->
   <br>
@@ -103,7 +105,8 @@ foreach ($users as $user){
                   <td><?php echo $user['user_name'] ?></td>
                   <td><?php echo $user['user_firtsname'] . ' ' . $user['user_lastname'] ?></td>
                   <td><?php echo ($user['user_status']) ? 'Activo' : 'Inactivo'; ?></td>
-                  <?php if($multicash == 1 && $multicash != ''){ echo "<td class='btnUnit'>".CHtml::link("", array("wharehouses/configUser", "id" => $model->wharehouse_id, "item" => $user['user_id']), array("class" => "fa fa-gears configUser"))."</td>"; } ?>
+                  <?php if($multicash == 1 && $multicash != ''){ 
+                    echo "<td class='btnUnit'><i class='fa fa-gears configUser' rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i></td>"; } ?>
                   <td>
                   <?php
                     echo CHtml::link("On", array("wharehouses/removeuser", "id" => $model->wharehouse_id, "item" => $user['user_id']), array("class" => "btn btn-success pull-right"));
@@ -142,8 +145,8 @@ foreach ($users as $user){
   //Is Multicash
   function isMulticash(datos)
   {
-    //Clear General Config and Table Vendors
-    $('.btnGeneral').html("");
+    //Hide General Config and Table Vendors
+    $('.configGeneral').hide();
     $('#edit-wharehouses-users').html("");
     //Create Table Vendors with Config
     $('.tblEncabezado').html("<th>Id</th><th>Usuario</th><th>Nombre</th><th>Estado</th><th>Config</th><th></th>");
@@ -154,7 +157,7 @@ foreach ($users as $user){
       $rowUser += '<td>' + val.user_name + '</td>';
       $rowUser += '<td>' + val.user_firtsname + ' ' + val.user_lastname + '</td>';
       $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';
-      $rowUser += "<td class='btnUnit'><a class='fa fa-gears configUser' href='<?php echo Yii::app()->createAbsoluteUrl('wharehouses/configUser/'); ?>'></a></td>";      
+      $rowUser += "<td class='btnUnit'><i class='fa fa-gears configUser' rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i></td>";     
       //$rowUser += '<td><a class="btn btn-success pull-right" href="'+val.user_id+'/wharehouses/removeuser/'+datos['id']+'?item='+val.user_id+'">On</a></td>';
       $rowUser += '<td><a class="btn btn-success pull-right" href="<?php echo Yii::app()->createAbsoluteUrl('wharehouses/removeuser/'); ?>">On</a></td>';
       $rowUser += '</tr>';
@@ -174,14 +177,13 @@ foreach ($users as $user){
       $rowUser += '<td>' + val.user_id + '</td>';
       $rowUser += '<td>' + val.user_name + '</td>';
       $rowUser += '<td>' + val.user_firtsname + ' ' + val.user_lastname + '</td>';
-      $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';      
-      //$rowUser += '<td><a class="btn btn-success pull-right" href="'+val.user_id+'/wharehouses/removeuser/'+datos['id']+'?item='+val.user_id+'">On</a></td>';
+      $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';
       $rowUser += '<td><a class="btn btn-success pull-right" href="<?php echo Yii::app()->createAbsoluteUrl('wharehouses/removeuser/'); ?>">On</a></td>';
       $rowUser += '</tr>';
       $('#edit-wharehouses-users').append($rowUser);
     });
-    //Add General Config
-    $('.btnGeneral').html("<a class='fa fa-gears configUser' href='<?php echo Yii::app()->createAbsoluteUrl('wharehouses/configGeneral/'); ?>'></a>");
+    //Show General Config
+    $('.configGeneral').show();
   }
 
   //Send Data
@@ -218,8 +220,13 @@ foreach ($users as $user){
   }
 
   jQuery(function ($) {
-    var $saveBtn = $('#saveVendor');
+    //Hide ConfigGeneral
+    ($('.multicash').attr('value') == 1 || $('.multicash').attr('value') == '#') ? $('.configGeneral').hide() : $('.configGeneral').show();
+    //Load Buttons
+    var $saveBtn = $('#saveVendor'),
+    $configGeneral = $('.configGeneral');
     var userVendor = null, wharehouseVendor = null;
+    //Print PDF
     $('.to-canvas').on('click', function () {
       var invoice = $('.invoice');
       $('.no-print').hide();
@@ -258,6 +265,7 @@ foreach ($users as $user){
         });       
       }
 
+      //First Config
       function configWharehouse(multicash)
       {
         //Call myModal with Structure Config
@@ -277,6 +285,50 @@ foreach ($users as $user){
         $("#WharehousesUser_dataphone_ip").val('');
         $("#WharehousesUser_dataphone_port").val('');
         $("#WharehousesUser_dataphone_name").val('');
+      }
+
+      //General & Users Config
+      function configWharehouseAdvance(user_id = null)
+      {
+        var wharehouse_id = $('.wharehouse_id').attr('value');
+        //Call myModal with Structure Config
+        $("#modal-config").modal({keyboard: false});
+        $(".modal-dialog").width("30%");
+        //Initial Values
+        $("#WharehousesUser_user_id").val((user_id.length)?user_id:"#");
+        $("#WharehousesUser_wharehouse_id").val(wharehouse_id);
+        //Load Data WhareHouses
+        $.ajax({
+          url: '<?php echo Yii::app()->createUrl('wharehouses/getWharehouse/'); ?>',
+          dataType: "json",
+          data: {
+            wharehouseVendor : wharehouse_id,
+            user_id : (user_id.length)?user_id:"#"
+          },
+          success: function (datos) {  
+            var apply_datafono = 'off',
+                cash_ip = '', cash_port = '', 
+                dataphone_ip = '', dataphone_port = '', dataphone_name = '',
+                daily_close = (datos[0]['daily_close'] == 1) ? 'on' : 'off',
+                multicash = (datos[0]['multicash'] == 1) ? 'on' : 'off';
+            if(datos[0]['cash_ip'] != '' && datos[0]['cash_ip'] != 0){
+              apply_datafono = 'on';
+              cash_ip = datos[0]['cash_ip'];
+              cash_port = datos[0]['cash_port'];
+              dataphone_ip = datos[0]['dataphone_ip'];
+              dataphone_port = datos[0]['dataphone_port'];
+              dataphone_name = datos[0]['dataphone_name'];
+            }
+            $('#WharehousesUser_multicash').bootstrapToggle(multicash);
+            $('#WharehousesUser_daily_close').bootstrapToggle(daily_close);
+            $('#WharehousesUser_apply_datafono').bootstrapToggle(apply_datafono);
+            $("#WharehousesUser_cash_ip").val(cash_ip);
+            $("#WharehousesUser_cash_port").val(cash_port);
+            $("#WharehousesUser_dataphone_ip").val(dataphone_ip);
+            $("#WharehousesUser_dataphone_port").val(dataphone_port);
+            $("#WharehousesUser_dataphone_name").val(dataphone_name);
+          }
+        });        
       }
 
       $wharehousesUser.on('click', 'a.btn', function (e) {
@@ -300,14 +352,14 @@ foreach ($users as $user){
         //Delete Object Config General
         var $haveUsers = $('#edit-wharehouses-users tr');
         if ($haveUsers.length == 1)
-          $('.btnGeneral').html("");
+          $('.configGeneral').hide();
       });
     }
 
     //Object Attributes
     var $addVendorBtn = $('.btn-add-vendor'),
     $autocompleteInput = $('#vendor-autocomplete'),
-    currentComponentSelected = null;
+    currentVendorSelected = null;
 
     if ($autocompleteInput.length) {
       $autocompleteInput.autocomplete({
@@ -327,23 +379,23 @@ foreach ($users as $user){
         minLength: 1,
         select: function (event, ui) {
           $autocompleteInput.val(ui.item.value);
-          currentComponentSelected = ui.item;
+          currentVendorSelected = ui.item;
           return false;
         }
       });
 
       $addVendorBtn.on('click', function (e) {
         e.preventDefault();
-        if (!currentComponentSelected)
+        if (!currentVendorSelected)
           return false;
         //Asing Value
-        userVendor = currentComponentSelected.id;
+        userVendor = currentVendorSelected.id;
 
         $.ajax({
-          url: currentComponentSelected.linkAjax,
+          url: currentVendorSelected.linkAjax,
           dataType: "json",
           data: {
-            user: currentComponentSelected.id
+            user: currentVendorSelected.id
           },
           success: function (set) {
             var $rowUser = '<tr class="' + set.data.user_id + '">';
@@ -353,11 +405,11 @@ foreach ($users as $user){
             $rowUser += '<td>' + (set.data.user_status ? 'Activo' : 'Inactivo') + '</td>';
             //Validate Multicash
             if(set.data.multicash == 1){
-              $('.btnGeneral').html("");
-              $rowUser += "<td class='btnUnit'><a class='fa fa-gears configUser' href='<?php echo Yii::app()->createAbsoluteUrl('wharehouses/configUser/'); ?>'></a></td>";
+              $('.configGeneral').hide();
+              $rowUser += "<td class='btnUnit'><i class='fa fa-gears configUser' rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i></td>";
             }
             else
-              $('.btnGeneral').html("<a class='fa fa-gears configUser' href='<?php echo Yii::app()->createAbsoluteUrl('wharehouses/configGeneral/'); ?>'></a>");
+              $('.configGeneral').show();
 
             $rowUser += '<td>' + set.data.link + '</td>';
             $rowUser += '</tr>';
@@ -373,5 +425,6 @@ foreach ($users as $user){
     }
     //Send All Event
     $saveBtn.on('click', sendVendor);
+    $configGeneral.on('click', configWharehouseAdvance)
   });
 </script>

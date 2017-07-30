@@ -35,7 +35,7 @@ class WharehousesController extends Controller {
             'users' => array('*'),
         ),
         array('allow', // allow admin user to perform 'admin' and 'delete' actions
-            'actions' => array('admin', 'delete', 'create', 'update', 'citiesbydepartament', 'removeuser', 'getUsers', 'RelationshipUserWharehouse','modalConfig', 'saveVendorOptions'),
+            'actions' => array('admin', 'delete', 'create', 'update', 'citiesbydepartament', 'removeuser', 'getUsers', 'getWharehouse', 'RelationshipUserWharehouse','modalConfig', 'saveVendorOptions'),
             'roles' => array('super', 'admin'),
         ),
         array('deny', // deny all users
@@ -267,15 +267,14 @@ class WharehousesController extends Controller {
   public function actionGetUsers($id) {
     $purifier = Purifier::getInstance();
     $response = JsonResponse::getInstance();
-    $term = $userRemove = $purifier->purify(Yii::app()->request->getParam('term'));
+    $term = $purifier->purify(Yii::app()->request->getParam('term'));
     $user = U::getInstance();
+    $dataReturn = [];
     try {
       if (!$user->isAdmin) {
         throw new \CException('No tiene permisos para poder ejecutar esta acción!');
       }
-      if ($dataUsers = WharehousesExtend::getUserTypeWharehouse($id, $term, Role::ROLE_VENDOR)) {
-
-        $dateReturn = [];
+      if ($dataUsers = WharehousesExtend::getUserTypeWharehouse($id, $term, Role::ROLE_VENDOR)) {        
         foreach ($dataUsers as $user) {
           $dataReturn[] = [
               'id' => $user['user_id'],
@@ -284,6 +283,48 @@ class WharehousesController extends Controller {
               'linkAjax' => Yii::app()->createUrl('wharehouses/RelationshipUserWharehouse/' . $id)
           ];
         }
+        echo CJSON::encode($dataReturn);
+      }
+    } catch (\CException $e) {
+      $response->error(Yii::t('errors', $e->getMessage() ?: 'You cannot set this action'));
+    }
+    Yii::app()->end();
+  }
+
+  /**
+   * return data json config to wharehouse
+   * @param int $id
+   * @throws \CException
+   */
+  public function actionGetWharehouse() {
+    $purifier = Purifier::getInstance();
+    $response = JsonResponse::getInstance();
+    //echo "<pre>";print_r($_GET);echo "</pre>";exit;
+    $wharehouseVendor = $purifier->purify(Yii::app()->request->getParam('wharehouseVendor'));
+    $user_id = $purifier->purify(Yii::app()->request->getParam('user_id'));
+    $user = U::getInstance();
+    $dataReturn = [];
+    $wharehouse = null;
+    try {
+      if (!$user->isAdmin) {
+        throw new \CException('No tiene permisos para poder ejecutar esta acción!');
+      }
+      //Validate User
+      if($user_id != "#"){
+        $wharehouse = WharehousesUser::model()->find(array('condition'=>'wharehouse_id=:wharehouse_id and user_id=:user_id','params'=>array(':wharehouse_id'=>$purifier->purify($wharehouseVendor), ':user_id'=>$purifier->purify($user_id))));
+      }else{
+        $wharehouse = WharehousesUser::model()->find(array('condition'=>'wharehouse_id=:wharehouse_id','params'=>array(':wharehouse_id'=>$purifier->purify($wharehouseVendor))));
+      }
+      if ($wharehouse) {        
+        $dataReturn[] = [
+            'multicash' => $wharehouse['multicash'],
+            'daily_close' => $wharehouse['daily_close'],
+            'cash_ip' => $wharehouse['cash_ip'],
+            'cash_port' => $wharehouse['cash_port'],
+            'dataphone_ip' => $wharehouse['dataphone_ip'],
+            'dataphone_port' => $wharehouse['dataphone_port'],
+            'dataphone_name' => $wharehouse['dataphone_name']
+        ];       
         echo CJSON::encode($dataReturn);
       }
     } catch (\CException $e) {
@@ -347,7 +388,6 @@ class WharehousesController extends Controller {
     $purifier = Purifier::getInstance();
     $response = JsonResponse::getInstance();    
     $user = U::getInstance();
-
     //Data POST Send
     $wharehouse_id = $purifier->purify($_POST['WharehousesUser']['wharehouse_id']);
     $user_id = $purifier->purify($_POST['WharehousesUser']['user_id']);
@@ -358,49 +398,49 @@ class WharehousesController extends Controller {
     $dataphone_ip = (isset($_POST['WharehousesUser']['dataphone_ip'])) ? $_POST['WharehousesUser']['dataphone_ip'] : 0;
     $dataphone_port = (isset($_POST['WharehousesUser']['dataphone_port'])) ? $_POST['WharehousesUser']['dataphone_port'] : 0;
     $dataphone_name = (isset($_POST['WharehousesUser']['dataphone_name'])) ? $_POST['WharehousesUser']['dataphone_name'] : 0;
-
-    //Load Dates
-    $WharehousesUser = WharehousesUser::model()->find(array('condition'=>'wharehouse_id=:wharehouse_id and user_id=:user_id','params'=>array(':wharehouse_id'=>$wharehouse_id, ':user_id'=>$user_id))); 
-
-    //Attributes of model WhareHouse User
-    $att = array(
-      'multicash' => $multicash, 
-      'daily_close' => $daily_close,
-      'date_open' => $WharehousesUser->date_open, 
-      'date_close' => $WharehousesUser->date_close,
-      'cash_ip' => $cash_ip , 
-      'cash_port' => $cash_port, 
-      'dataphone_ip' => $dataphone_ip, 
-      'dataphone_port' => $dataphone_port,
-      'dataphone_name' => $dataphone_name,
-      'user_id' => $user_id,
-      'wharehouse_id' => $wharehouse_id
-    );
-
-    //First Update MultiCash State
-    WharehousesUser::model()->updateAll(array('multicash' => $multicash), 'wharehouse_id = '+$wharehouse_id);
-
-    //Second Delete
-    $data = array('user_id' => $user_id, 'wharehouse_id' => $wharehouse_id);
-    WharehousesUser::model()->deleteAllByAttributes($data);
-    
-    //Third Save Information  
-    $model = new WharehousesUser;
-    $model->attributes = $att;
-
-    // Uncomment the following line if AJAX validation is needed
-    $this->performAjaxValidation($model);
-    
     //Validate Save
-    if($model->save())
+    if($user_id != '#'){
+      //Load Dates
+      $WharehousesUser = WharehousesUser::model()->find(array('condition'=>'wharehouse_id=:wharehouse_id and user_id=:user_id','params'=>array(':wharehouse_id'=>$wharehouse_id, ':user_id'=>$user_id))); 
+      //Attributes of model WhareHouse User
+      $att = array(
+        'multicash' => $multicash, 
+        'daily_close' => $daily_close,
+        'date_open' => $WharehousesUser->date_open, 
+        'date_close' => $WharehousesUser->date_close,
+        'cash_ip' => $cash_ip , 
+        'cash_port' => $cash_port, 
+        'dataphone_ip' => $dataphone_ip, 
+        'dataphone_port' => $dataphone_port,
+        'dataphone_name' => $dataphone_name,
+        'user_id' => $user_id,
+        'wharehouse_id' => $wharehouse_id
+      );
+      //First Update MultiCash State
+      WharehousesUser::model()->updateAll(array('multicash' => $multicash), 'wharehouse_id = '+$wharehouse_id);
+      //Second Delete
+      $data = array('user_id' => $user_id, 'wharehouse_id' => $wharehouse_id);
+      WharehousesUser::model()->deleteAllByAttributes($data);      
+      //Third Save Information  
+      $model = new WharehousesUser;
+      $model->attributes = $att;
+      // Uncomment the following line if AJAX validation is needed
+      $this->performAjaxValidation($model);      
+      //Validate Save
+      if($model->save())
+        $datosConf = array('estado' => 'success', 'mensaje' => 'Vendedor configurado con exito.', 'id' => $wharehouse_id, "users" => WharehousesExtend::getUsersByWharehouses($wharehouse_id), 'multicash' => $multicash);
+      else{
+        echo $model->getErrors();
+        $datosConf = array('estado' => 'danger', 'mensaje' => 'Datos de configuración vacios; campos marcados con ( * ) son obligatorios.');
+      }      
+    }else{
+      //First Update MultiCash State
+      WharehousesUser::model()->updateAll(array('multicash' => $multicash, 'daily_close' => $daily_close, 'cash_ip' => $cash_ip, 'cash_port' => $cash_port, 'dataphone_ip' => $dataphone_ip, 'dataphone_port' => $dataphone_port, 'dataphone_name' => $dataphone_name), 'wharehouse_id = '+$wharehouse_id);
+      //Return Data
       $datosConf = array('estado' => 'success', 'mensaje' => 'Vendedor configurado con exito.', 'id' => $wharehouse_id, "users" => WharehousesExtend::getUsersByWharehouses($wharehouse_id), 'multicash' => $multicash);
-    else{
-      echo $model->getErrors();
-      $datosConf = array('estado' => 'danger', 'mensaje' => 'Datos de configuración vacios; campos marcados con ( * ) son obligatorios.');
     }
     //Return Data
     print_r(json_encode($datosConf));
     exit;
   }
-
 }
