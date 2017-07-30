@@ -93,7 +93,7 @@
                   <?php
                   echo CHtml::textField('WharehousesUser[cash_ip]', '', [
                       'id' => 'WharehousesUser_cash_ip',
-                      'class' => 'form-control',
+                      'class' => 'form-control dataphone',
                       'placeholder' => '190.168.213.20',
                       'pattern' => '^([0-9]{1,3}\.){3}[0-9]{1,3}$'
                   ]);
@@ -110,7 +110,7 @@
                   <?php
                   echo CHtml::textField('WharehousesUser[cash_port]', '', [
                       'id' => 'WharehousesUser_cash_port',
-                      'class' => 'form-control',
+                      'class' => 'form-control dataphone',
                       'placeholder' => '5237'
                   ]);
                   ?>
@@ -129,7 +129,7 @@
                   <?php
                   echo CHtml::textField('WharehousesUser[dataphone_ip]', '', [
                       'id' => 'WharehousesUser_dataphone_ip',
-                      'class' => 'form-control',
+                      'class' => 'form-control dataphone',
                       'placeholder' => '192.113.0.80',
                       'pattern' => '^([0-9]{1,3}\.){3}[0-9]{1,3}$'
                   ]);
@@ -147,7 +147,7 @@
                   <?php
                   echo CHtml::textField('WharehousesUser[dataphone_port]', '', [
                       'id' => 'WharehousesUser_dataphone_port',
-                      'class' => 'form-control',
+                      'class' => 'form-control dataphone',
                       'placeholder' => '3333'
                   ]);
                   ?>
@@ -163,7 +163,7 @@
                   <?php
                   echo CHtml::textField('WharehousesUser[dataphone_name]', '', [
                       'id' => 'WharehousesUser_dataphone_name',
-                      'class' => 'form-control',
+                      'class' => 'form-control dataphone',
                       'placeholder' => 'DATA01'
                   ]);
                   ?>
@@ -176,14 +176,9 @@
       <div class="modal-footer" id="footer-config">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group">
                 <button type="button" class="btn btn-block btn-success btn-lg" data-dismiss="modal" id="saveVendor">Guardar</button>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <?php echo CHtml::submitButton("Cancelar", array("class" => "btn btn-block btn-danger btn-lg", "data-dismiss" => "modal", "id" => "exit")); ?>
               </div>
             </div>
           </div>

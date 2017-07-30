@@ -47,6 +47,38 @@ class WharehousesExtend extends Wharehouses {
   }
 
   /**
+   * load data to users in wharehouse
+   * @param int $id
+   * @return Array
+   */
+  public static function getUsersWharehouses($id) {
+    $purifier = Purifier::getInstance();
+    $dataReturn = [];
+    $query = Yii::app()->db->createCommand()
+            ->select(['*'])
+            ->from('tbl_wharehouses_user wu')
+            ->join('tbl_wharehouses w', 'w.wharehouse_id = wu.wharehouse_id')
+            ->join('tbl_user u', 'u.user_id = wu.user_id')
+            ->where('wu.wharehouse_id=' . $purifier->purify($id))
+            ->andWhere('u.company_id = w.company_id')
+            ->order('user_name')
+    ;
+    $dataUsers = $query->queryAll();
+    foreach ($dataUsers as $userData) {
+      $dataReturn[] = [
+        'wharehouse_id'=>$userData['wharehouse_id'],  
+        'user_id'=>$userData['user_id'],
+        'user_name'=>$userData['user_name'],
+        'user_firtsname'=>$userData['user_firtsname'],
+        'user_lastname'=>$userData['user_lastname'],
+        'user_status'=>$userData['user_status'],
+        'link'=> CHtml::link("On", array("wharehouses/removeuser", "id" => $id, "item" => $userData['user_id']), array("class" => "btn btn-success pull-right")),
+      ];
+    }
+    return $dataReturn;
+  }
+
+  /**
    * load data to user wharehouse
    * @param int $id
    * @param int $user

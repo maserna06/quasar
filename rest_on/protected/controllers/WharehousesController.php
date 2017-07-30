@@ -55,23 +55,19 @@ class WharehousesController extends Controller {
     $cs = Yii::app()->getClientScript();
     $cs->registerCssFile('http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');    
     $cs->registerScriptFile(Yii::app()->theme->baseUrl.'/js/wharehouses.js');
-
     $format = Yii::app()->request->getParam('format');
-
     if ($format) {
         switch ($format) {
-            case 'pdf':
-                error_reporting(0);
-                $content = '<img style="width:100%;" src="' . $_POST['image'] . '" />';
-
-                $html2pdf = new HTML2PDF('P', [215.9, 279.4], 'es');
-                $html2pdf->WriteHTML($content);
-                $html2pdf->Output($model->product_description . '.pdf');
-                Yii::app()->end();
-                break;
+          case 'pdf':
+              error_reporting(0);
+              $content = '<img style="width:100%;" src="' . $_POST['image'] . '" />';
+              $html2pdf = new HTML2PDF('P', [215.9, 279.4], 'es');
+              $html2pdf->WriteHTML($content);
+              $html2pdf->Output($model->product_description . '.pdf');
+              Yii::app()->end();
+            break;
         }
     }
-
     $this->render('view', array(
         'model' => $this->loadModel($id), 'users' => WharehousesExtend::getUsersByWharehouses($id)
     ));
@@ -84,9 +80,7 @@ class WharehousesController extends Controller {
   public function actionCreate() {
     if (Yii::app()->user->getId() === null)
       $this->redirect(array('site/login'));
-
     $model = new Wharehouses;
-
     // Uncomment the following line if AJAX validation is needed
     $this->performAjaxValidation($model);
     if (isset($_POST['Wharehouses'])) {
@@ -100,12 +94,10 @@ class WharehousesController extends Controller {
       if($model->save())
         $datosConf = array('estado' => 'success', 'mensaje' => 'Bodega creada correctamente.');
       else
-          $datosConf = array('estado' => 'danger', 'mensaje' => 'Datos de Bodega vacios; campos marcados con ( * ) son obligatorios.');
-      
+          $datosConf = array('estado' => 'danger', 'mensaje' => 'Datos de Bodega vacios; campos marcados con ( * ) son obligatorios.');      
       print_r(json_encode($datosConf));
       exit;
     }
-
     $this->render('create', array(
         'model' => $model,
     ));
@@ -119,12 +111,9 @@ class WharehousesController extends Controller {
   public function actionUpdate($id) {
     if (Yii::app()->user->getId() === null)
       $this->redirect(array('site/login'));
-
     $model = $this->loadModel($id);
-
     // Uncomment the following line if AJAX validation is needed
     $this->performAjaxValidation($model);
-
     if (isset($_POST['Wharehouses'])) {
       $purifier = Purifier::getInstance();
       $user = U::getInstance();
@@ -136,12 +125,10 @@ class WharehousesController extends Controller {
       if($model->save())
         $datosConf = array('estado' => 'success', 'mensaje' => 'Bodega actualizada correctamente.');
       else
-          $datosConf = array('estado' => 'danger', 'mensaje' => 'Datos de Bodega vacios; campos marcados con ( * ) son obligatorios.');
-      
+          $datosConf = array('estado' => 'danger', 'mensaje' => 'Datos de Bodega vacios; campos marcados con ( * ) son obligatorios.');      
       print_r(json_encode($datosConf));
       exit;
     }
-
     $this->render('update', array(
         'model' => $model,
     ));
@@ -155,7 +142,6 @@ class WharehousesController extends Controller {
   public function actionDelete($id) {
     if (Yii::app()->user->getId() === null)
       $this->redirect(array('site/login'));
-
     $model = $this->loadModel($id);
     WharehousesExtend::deleteWharehouseUser($id);
     $model->wharehouse_status = 3;
@@ -171,12 +157,10 @@ class WharehousesController extends Controller {
   public function actionIndex() {
     if (Yii::app()->user->getId() === null)
       $this->redirect(array('site/login'));
-
     $model = new Wharehouses('search');
     $model->unsetAttributes();  // clear any default values
     if (isset($_GET['Wharehouses']))
       $model->attributes = $_GET['Wharehouses'];
-
     $this->render('index', array(
         'model' => $model,
     ));
@@ -188,12 +172,10 @@ class WharehousesController extends Controller {
   public function actionAdmin() {
     if (Yii::app()->user->getId() === null)
       $this->redirect(array('site/login'));
-
     $model = new Wharehouses('search');
     $model->unsetAttributes();  // clear any default values
     if (isset($_GET['Wharehouses']))
       $model->attributes = $_GET['Wharehouses'];
-
     $this->render('admin', array(
         'model' => $model,
     ));
@@ -285,7 +267,7 @@ class WharehousesController extends Controller {
         }
         echo CJSON::encode($dataReturn);
       }
-    } catch (\CException $e) {
+    }catch (\CException $e) {
       $response->error(Yii::t('errors', $e->getMessage() ?: 'You cannot set this action'));
     }
     Yii::app()->end();
@@ -347,7 +329,6 @@ class WharehousesController extends Controller {
       $multicash = 0;
       //Query Exist Data
       $WhUser = WharehousesUser::model()->find(array('condition'=>'wharehouse_id=:wharehouse_id','params'=>array(':wharehouse_id'=>$purifier->purify($id))));
-
       if($WhUser){
         //Attributes of model WhareHouse User
         $att = array('user_id' => $purifier->purify($userRequest), 'wharehouse_id' => $purifier->purify($id), 'multicash' => $WhUser->multicash, 'daily_close' => $WhUser->daily_close, 'date_open' => $WhUser->date_open, 'date_close' => $WhUser->date_close, 'cash_ip' => $WhUser->cash_ip, 'cash_port' => $WhUser->cash_port, 'dataphone_ip' => $WhUser->dataphone_ip, 'dataphone_port' => $WhUser->dataphone_port, 'dataphone_name' => $WhUser->dataphone_name);
@@ -355,12 +336,11 @@ class WharehousesController extends Controller {
         if($WhUser->multicash == 1){$stateSave = 1; $multicash = 1;}
       }else{
         //Attributes of model WhareHouse User
-        $att = array('user_id' => $purifier->purify($userRequest), 'wharehouse_id' => $purifier->purify($id), 'multicash' => 0, 'daily_close' => 1, 'date_open' => '2100-01-01', 'date_close' => '1900-01-01', 'cash_ip' => 0, 'cash_port' => 0, 'dataphone_ip' => 0, 'dataphone_port' => 0, 'dataphone_name' => 0);
+        $att = array('user_id' => $purifier->purify($userRequest), 'wharehouse_id' => $purifier->purify($id), 'multicash' => 0, 'daily_close' => 1, 'date_open' => '2100-01-01', 'date_close' => '1900-01-01', 'cash_ip' => '', 'cash_port' => '', 'dataphone_ip' => '', 'dataphone_port' => '', 'dataphone_name' => '');
         //Enable MultiCash
         $stateSave = 1;
         $multicash = 0;
       }
-
       $WharehousesUsers = new WharehousesUser;
       $WharehousesUsers->attributes = $att;
       if ($WharehousesUsers->save()) {
@@ -393,13 +373,14 @@ class WharehousesController extends Controller {
     $user_id = $purifier->purify($_POST['WharehousesUser']['user_id']);
     $multicash = (isset($_POST['WharehousesUser']['multicash'])) ? 1 : 0;
     $daily_close = (isset($_POST['WharehousesUser']['daily_close'])) ? 1 : 0;
-    $cash_ip = (isset($_POST['WharehousesUser']['cash_ip'])) ? $_POST['WharehousesUser']['cash_ip'] : 0;
-    $cash_port = (isset($_POST['WharehousesUser']['cash_port'])) ? $_POST['WharehousesUser']['cash_port'] : 0;
-    $dataphone_ip = (isset($_POST['WharehousesUser']['dataphone_ip'])) ? $_POST['WharehousesUser']['dataphone_ip'] : 0;
-    $dataphone_port = (isset($_POST['WharehousesUser']['dataphone_port'])) ? $_POST['WharehousesUser']['dataphone_port'] : 0;
-    $dataphone_name = (isset($_POST['WharehousesUser']['dataphone_name'])) ? $_POST['WharehousesUser']['dataphone_name'] : 0;
+    $apply_datafono = (isset($_POST['WharehousesUser']['apply_datafono'])) ? 1 : 0;
+    $cash_ip = (isset($_POST['WharehousesUser']['cash_ip'])) ? $_POST['WharehousesUser']['cash_ip'] : '';
+    $cash_port = (isset($_POST['WharehousesUser']['cash_port'])) ? $_POST['WharehousesUser']['cash_port'] : '';
+    $dataphone_ip = (isset($_POST['WharehousesUser']['dataphone_ip'])) ? $_POST['WharehousesUser']['dataphone_ip'] : '';
+    $dataphone_port = (isset($_POST['WharehousesUser']['dataphone_port'])) ? $_POST['WharehousesUser']['dataphone_port'] : '';
+    $dataphone_name = (isset($_POST['WharehousesUser']['dataphone_name'])) ? $_POST['WharehousesUser']['dataphone_name'] : '';
     //Validate Save
-    if($user_id != '#'){
+    if($user_id != '#'){      
       //Load Dates
       $WharehousesUser = WharehousesUser::model()->find(array('condition'=>'wharehouse_id=:wharehouse_id and user_id=:user_id','params'=>array(':wharehouse_id'=>$wharehouse_id, ':user_id'=>$user_id))); 
       //Attributes of model WhareHouse User
@@ -415,31 +396,36 @@ class WharehousesController extends Controller {
         'dataphone_name' => $dataphone_name,
         'user_id' => $user_id,
         'wharehouse_id' => $wharehouse_id
-      );
-      //First Update MultiCash State
-      WharehousesUser::model()->updateAll(array('multicash' => $multicash), 'wharehouse_id = '+$wharehouse_id);
-      if($multicash == 0)
-        WharehousesUser::model()->updateAll(array('cash_ip' => $cash_ip , 'cash_port' => $cash_port, 'dataphone_ip' => $dataphone_ip, 'dataphone_port' => $dataphone_port,'dataphone_name' => $dataphone_name), 'wharehouse_id = '+$wharehouse_id);
-      //Second Delete
-      $data = array('user_id' => $user_id, 'wharehouse_id' => $wharehouse_id);
-      WharehousesUser::model()->deleteAllByAttributes($data);      
-      //Third Save Information  
+      );      
+      //First Save Information  
       $model = new WharehousesUser;
       $model->attributes = $att;
-      // Uncomment the following line if AJAX validation is needed
-      $this->performAjaxValidation($model);      
+      //Create Scenario
+      if($apply_datafono == 1)
+        $model->scenario = 'dataphone';
+      // Uncomment the following line if AJAX validation is needed     
+      $this->performAjaxValidation($model);              
       //Validate Save
-      if($model->save())
-        $datosConf = array('estado' => 'success', 'mensaje' => 'Vendedor configurado con exito.', 'id' => $wharehouse_id, "users" => WharehousesExtend::getUsersByWharehouses($wharehouse_id), 'multicash' => $multicash);
-      else{
-        echo $model->getErrors();
-        $datosConf = array('estado' => 'danger', 'mensaje' => 'Datos de configuración vacios; campos marcados con ( * ) son obligatorios.');
-      }      
+      if($model->save()){
+        //Second Update MultiCash State
+        WharehousesUser::model()->updateAll(array('multicash' => $multicash), 'wharehouse_id = '+$wharehouse_id);
+        if($multicash == 0)
+          WharehousesUser::model()->updateAll(array('cash_ip' => $cash_ip , 'cash_port' => $cash_port, 'dataphone_ip' => $dataphone_ip, 'dataphone_port' => $dataphone_port,'dataphone_name' => $dataphone_name), 'wharehouse_id = '+$wharehouse_id);
+        //Third Delete
+        $data = array('user_id' => $user_id, 'wharehouse_id' => $wharehouse_id);
+        WharehousesUser::model()->deleteAllByAttributes($data);
+        $model = new WharehousesUser;
+        $model->attributes = $att;
+        $model->save();
+        $datosConf = array('estado' => 'success', 'mensaje' => 'Vendedor configurado con exito.', 'id' => $wharehouse_id, "users" => WharehousesExtend::getUsersWharehouses($wharehouse_id), 'multicash' => $multicash);
+      }
+      else
+        $datosConf = array('estado' => 'danger', 'mensaje' => 'Datos de configuración vacios; campos marcados con ( * ) son obligatorios.'); 
     }else{
       //First Update MultiCash State
       WharehousesUser::model()->updateAll(array('multicash' => $multicash, 'daily_close' => $daily_close, 'cash_ip' => $cash_ip, 'cash_port' => $cash_port, 'dataphone_ip' => $dataphone_ip, 'dataphone_port' => $dataphone_port, 'dataphone_name' => $dataphone_name), 'wharehouse_id = '+$wharehouse_id);
       //Return Data
-      $datosConf = array('estado' => 'success', 'mensaje' => 'Vendedor configurado con exito.', 'id' => $wharehouse_id, "users" => WharehousesExtend::getUsersByWharehouses($wharehouse_id), 'multicash' => $multicash);
+      $datosConf = array('estado' => 'success', 'mensaje' => 'Vendedor configurado con exito.', 'id' => $wharehouse_id, "users" => WharehousesExtend::getUsersWharehouses($wharehouse_id), 'multicash' => $multicash);
     }
     //Return Data
     print_r(json_encode($datosConf));

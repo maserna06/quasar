@@ -39,6 +39,7 @@ class WharehousesUser extends CActiveRecord
 			array('cash_port, dataphone_port', 'length', 'max'=>4),
 			array('dataphone_name', 'length', 'max'=>200),
 			array('date_open, date_close', 'safe'),
+			array('cash_ip, cash_port, dataphone_ip, dataphone_port, dataphone_name', 'required', 'on'=>'dataphone'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('wharehouse_id, user_id, multicash, daily_close, date_open, date_close, cash_ip, cash_port, dataphone_ip, dataphone_port, dataphone_name', 'safe', 'on'=>'search'),

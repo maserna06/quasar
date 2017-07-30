@@ -161,7 +161,7 @@ foreach ($users as $user){
       $rowUser += '<td>' + val.user_firtsname + ' ' + val.user_lastname + '</td>';
       $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';
       $rowUser += "<td class='columConfig'><i class='fa fa-gears configUser' name="+ val.user_id +" rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i></td>";     
-      $rowUser += '<td>' + val.user_name + '</td>';
+      $rowUser += '<td>' + val.link + '</td>';
       $rowUser += '</tr>';
       $('#edit-wharehouses-users').append($rowUser);
     });
@@ -180,7 +180,7 @@ foreach ($users as $user){
       $rowUser += '<td>' + val.user_name + '</td>';
       $rowUser += '<td>' + val.user_firtsname + ' ' + val.user_lastname + '</td>';
       $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';
-      $rowUser += '<td>' + val.user_name + '</td>';
+      $rowUser += '<td>' + val.link + '</td>';
       $rowUser += '</tr>';
       $('#edit-wharehouses-users').append($rowUser);
     });
@@ -201,7 +201,7 @@ foreach ($users as $user){
             processData: false,
             contentType: false,
             success: function (data) {
-              var datos = $.parseJSON(data);       
+              var datos = $.parseJSON(data);
               if(datos['estado'] == "success"){
                 $('#modal-config').modal('hide');
                 var multicash = datos['multicash'];
@@ -213,7 +213,8 @@ foreach ($users as $user){
                   case 1 : isMulticash(datos);
                     break;
                 }
-              }
+              }else if(datos['estado'] == "danger")
+                $('.dataphone').css({"border-color": "red"})
             }
         });
     }
