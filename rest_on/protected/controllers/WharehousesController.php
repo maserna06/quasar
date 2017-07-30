@@ -418,6 +418,8 @@ class WharehousesController extends Controller {
       );
       //First Update MultiCash State
       WharehousesUser::model()->updateAll(array('multicash' => $multicash), 'wharehouse_id = '+$wharehouse_id);
+      if($multicash == 0)
+        WharehousesUser::model()->updateAll(array('cash_ip' => $cash_ip , 'cash_port' => $cash_port, 'dataphone_ip' => $dataphone_ip, 'dataphone_port' => $dataphone_port,'dataphone_name' => $dataphone_name), 'wharehouse_id = '+$wharehouse_id);
       //Second Delete
       $data = array('user_id' => $user_id, 'wharehouse_id' => $wharehouse_id);
       WharehousesUser::model()->deleteAllByAttributes($data);      

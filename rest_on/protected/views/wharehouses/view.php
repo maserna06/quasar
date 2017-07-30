@@ -49,7 +49,7 @@ foreach ($users as $user){
       </address>
     </div><!-- /.col -->
     <div class="col-sm-2 invoice-col" style="text-align: right;">
-      <i class="fa fa-gears configGeneral" rel="tooltip" data-toggle="tooltip" data-original-title="Configuración General" style="cursor: pointer; color: #3c8dbc;"></i>
+      <i class="fa fa-gears configGeneral" rel="tooltip" data-toggle="tooltip" data-original-title="Configuración General" style="cursor: pointer; color: #3c8dbc; display: none;"></i>
       <input type="hidden" class="multicash" value="<?php echo ($multicash != '')?$multicash:'#'; ?>">
       <input type="hidden" class="wharehouse_id" value="<?php echo $model->wharehouse_id; ?>">
     </div><!-- /.col -->
@@ -94,7 +94,7 @@ foreach ($users as $user){
                 <th>Usuario</th>
                 <th>Nombre</th>
                 <th>Estado</th>
-                <?php if($multicash == 1 && $multicash != ''){ echo "<th>Config</th>"; } ?>
+                <th class='columConfig' style="display: none;">Config</th>
                 <th></th>
               </tr>
             </thead>
@@ -105,8 +105,11 @@ foreach ($users as $user){
                   <td><?php echo $user['user_name'] ?></td>
                   <td><?php echo $user['user_firtsname'] . ' ' . $user['user_lastname'] ?></td>
                   <td><?php echo ($user['user_status']) ? 'Activo' : 'Inactivo'; ?></td>
-                  <?php if($multicash == 1 && $multicash != ''){ 
-                    echo "<td class='btnUnit'><i class='fa fa-gears configUser' rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i></td>"; } ?>
+                  <td class='columConfig' style="display: none;">
+                  <?php 
+                    echo "<i class='fa fa-gears configUser' name=". $user['user_id'] ." rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i>"; 
+                  ?>
+                  </td>
                   <td>
                   <?php
                     echo CHtml::link("On", array("wharehouses/removeuser", "id" => $model->wharehouse_id, "item" => $user['user_id']), array("class" => "btn btn-success pull-right"));
@@ -157,9 +160,8 @@ foreach ($users as $user){
       $rowUser += '<td>' + val.user_name + '</td>';
       $rowUser += '<td>' + val.user_firtsname + ' ' + val.user_lastname + '</td>';
       $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';
-      $rowUser += "<td class='btnUnit'><i class='fa fa-gears configUser' rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i></td>";     
-      //$rowUser += '<td><a class="btn btn-success pull-right" href="'+val.user_id+'/wharehouses/removeuser/'+datos['id']+'?item='+val.user_id+'">On</a></td>';
-      $rowUser += '<td><a class="btn btn-success pull-right" href="<?php echo Yii::app()->createAbsoluteUrl('wharehouses/removeuser/'); ?>">On</a></td>';
+      $rowUser += "<td class='columConfig'><i class='fa fa-gears configUser' name="+ val.user_id +" rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i></td>";     
+      $rowUser += '<td>' + val.user_name + '</td>';
       $rowUser += '</tr>';
       $('#edit-wharehouses-users').append($rowUser);
     });
@@ -178,7 +180,7 @@ foreach ($users as $user){
       $rowUser += '<td>' + val.user_name + '</td>';
       $rowUser += '<td>' + val.user_firtsname + ' ' + val.user_lastname + '</td>';
       $rowUser += '<td>' + (val.user_status ? 'Activo' : 'Inactivo') + '</td>';
-      $rowUser += '<td><a class="btn btn-success pull-right" href="<?php echo Yii::app()->createAbsoluteUrl('wharehouses/removeuser/'); ?>">On</a></td>';
+      $rowUser += '<td>' + val.user_name + '</td>';
       $rowUser += '</tr>';
       $('#edit-wharehouses-users').append($rowUser);
     });
@@ -221,10 +223,17 @@ foreach ($users as $user){
 
   jQuery(function ($) {
     //Hide ConfigGeneral
-    ($('.multicash').attr('value') == 1 || $('.multicash').attr('value') == '#') ? $('.configGeneral').hide() : $('.configGeneral').show();
+    if($('.multicash').attr('value') == 1 || $('.multicash').attr('value') == '#'){
+      $('.configGeneral').hide();
+      $('.columConfig').show();
+    }else{
+      $('.configGeneral').show();
+      $('.columConfig').hide();
+    }
     //Load Buttons
     var $saveBtn = $('#saveVendor'),
-    $configGeneral = $('.configGeneral');
+    $configGeneral = $('.configGeneral'),
+    $configUser = $('.configUser');
     var userVendor = null, wharehouseVendor = null;
     //Print PDF
     $('.to-canvas').on('click', function () {
@@ -406,10 +415,12 @@ foreach ($users as $user){
             //Validate Multicash
             if(set.data.multicash == 1){
               $('.configGeneral').hide();
-              $rowUser += "<td class='btnUnit'><i class='fa fa-gears configUser' rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i></td>";
+              $rowUser += "<td class='columConfig'><i class='fa fa-gears configUser' name="+ set.data.user_id+" rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i></td>";
             }
-            else
+            else{
               $('.configGeneral').show();
+              $('.columConfig').hide();
+            }
 
             $rowUser += '<td>' + set.data.link + '</td>';
             $rowUser += '</tr>';
@@ -423,8 +434,11 @@ foreach ($users as $user){
         });
       });
     }
-    //Send All Event
+    //Send All Events
     $saveBtn.on('click', sendVendor);
-    $configGeneral.on('click', configWharehouseAdvance)
+    $configGeneral.on('click', configWharehouseAdvance);
+    $configUser.on('click', function () {
+      configWharehouseAdvance($(this).attr('name'));
+    });
   });
 </script>

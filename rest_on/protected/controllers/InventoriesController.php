@@ -296,10 +296,6 @@ class InventoriesController extends Controller {
     public function actionConfig() {
         if (Yii::app()->user->getId() === null)
             $this->redirect(array('site/login'));
-
-        //echo "<pre>";print_r($_POST);echo "</pre>";exit;
-
-
         $id = TransferConfigExtend::transfersCreate();
         if (!$id) {
             $model = new TransferConfig;
@@ -307,7 +303,6 @@ class InventoriesController extends Controller {
             $model = TransferConfig::model()->findByPk($id);
             $model->scenario = 'existe'; //se decalra scenario para validar si se realiza cambio en el numero.
         }
-
         $id1 = FinishedProductConfigExtend::finishedproductCreate();
         if (!$id1) {
             $model1 = new FinishedProductConfig;
@@ -317,17 +312,15 @@ class InventoriesController extends Controller {
         }
         //Miguel p 27-07-2017
         $id2 = FinishedInventoryConfigExtend::finishedinventoryCreate();
-        /*if (!$id2) {
+        //echo "<pre>";print_r($id2);echo "</pre>";exit;        
+        if (!$id2) {
             $model2 = new InventoryConfig;
         } else {
-            $model2 = InventoryConfig::model()->findByPk($id1);
+            $model2 = InventoryConfig::model()->findByPk($id2);
             $model2->scenario = 'existe';//se decalra scenario para validar si se realiza cambio en el numero.
-        }*/
-
-       
+        }       
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation(array($model, $model1, $model2));
-
         if (isset($_POST['TransferConfig'])) {
             $model->attributes = $_POST['TransferConfig'];
             if ($model->save()) {
@@ -347,8 +340,6 @@ class InventoriesController extends Controller {
             print_r(json_encode($datosConf));
             exit;
         }
-
-
         if (isset($_POST['FinishedProductConfig'])) {
             //print_r($_POST);exit;
             $model1->attributes = $_POST['FinishedProductConfig'];
@@ -369,12 +360,12 @@ class InventoriesController extends Controller {
             print_r(json_encode($datosConf));
             exit;
         }
-
         /*miguel p 27-07-2017*/
-
         if (isset($_POST['FinishedInventoryConfig'])) {
             //print_r($_POST);exit;
             $model2->attributes = $_POST['FinishedInventoryConfig'];
+            $model2->manage_tables = ($model2->manage_tables == 'on') ? 1 : 0;
+            $model2->handle_datasheet = ($model2->handle_datasheet == 'on') ? 1 : 0;
             if ($model2->save()) {
                 $datosConf = array('estado' => 'success', 'mensaje' => 'Configuración para Inventario guardada con éxito.');
             } else {
