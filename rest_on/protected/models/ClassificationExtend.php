@@ -45,18 +45,19 @@ class ClassificationExtend extends Classification {
     $purifier = Purifier::getInstance();
     $user = U::getInstance();
     $query = Yii::app()->db->createCommand()
-            ->select(['w.*'])
-            ->from('tbl_wharehouses w')
-            ->where(['and', 'wharehouse_status=1']);
+      ->select(['w.*'])
+      ->from('tbl_wharehouses w')
+      ->join('tbl_wharehouses_user wu', 'wu.wharehouse_id = w.wharehouse_id')
+      ->where(['and', 'wharehouse_status=1']);
 
     if ($classification_id) {
       $query->select(['w.*', 'wc.wharehouse_id wharehouse_related'])
-              ->leftJoin('tbl_wharehouses_classification wc', 'wc.wharehouse_id = w.wharehouse_id AND wc.classification_id = ' . $purifier->purify($classification_id));
+        ->leftJoin('tbl_wharehouses_classification wc', 'wc.wharehouse_id = w.wharehouse_id AND wc.classification_id = ' . $purifier->purify($classification_id));
     }
 
     if(!$user->isSuper){
-       $query->join('tbl_user u', 'u.company_id = w.company_id')
-              ->andWhere('u.user_id=:idu', [ ':idu' => $purifier->purify(Yii::app()->user->id)]);
+      $query->join('tbl_user u', 'u.company_id = w.company_id')
+        ->andWhere('u.user_id=:idu', [ ':idu' => $purifier->purify(Yii::app()->user->id)]);
     }
 
     return $query->queryAll();

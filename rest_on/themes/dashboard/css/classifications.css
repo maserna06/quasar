@@ -7,46 +7,46 @@ and open the template in the editor.
     Created on : Nov 28, 2016, 9:45:00 PM
     Author     : yilveru
 */
-#classification-form .content-products {
-  margin-bottom: 50px;
-  position: relative;
-  z-index: 1; }
-#classification-form .parent-display {
-  padding: 0 4px; }
-#classification-form .display-product {
-  border-right: 1px solid #ccc;
-  margin: 10px 0;
-  padding: 7px 10px 5px 10px; }
+  #classification-form .content-products {
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 1; }
+  #classification-form .parent-display {
+    padding: 0 4px; }
+  #classification-form .display-product {
+    border-right: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 7px 10px 5px 10px; }
   #classification-form .display-product label {
     cursor: pointer;
     width: 100%; }
-    #classification-form .display-product label input[type='checkbox'] {
-      display: inline-block;
-      width: 20px !important;
-      vertical-align: middle; }
-    #classification-form .display-product label img {
-      display: inline-block;
-      vertical-align: top; }
-    #classification-form .display-product label .small {
-      vertical-align: middle;
-      text-align: center;
-      width: 54%;
-      text-align: left;
-      margin-top: 6px; }
-      #classification-form .display-product label .small.small {
-        display: inline-block;
-        font-size: 1rem; }
-      #classification-form .display-product label .small h3 {
-        margin: 0;
-        font-size: 1.3rem;
-        transition: all 0.3s;
-        font-weight: 600; }
-        #classification-form .display-product label .small h3 span {
-          font-size: 0.9em;
-          font-weight: normal;
-          width: 100%;
-          display: block; }
-    #classification-form .display-product label .toogle-check {
+  #classification-form .display-product label input[type='checkbox'] {
+    display: inline-block;
+    width: 20px !important;
+    vertical-align: middle; }
+  #classification-form .display-product label img {
+    display: inline-block;
+    vertical-align: top; }
+  #classification-form .display-product label .small {
+    vertical-align: middle;
+    text-align: center;
+    width: 70%;
+    text-align: left;
+    margin-top: 6px; }
+  #classification-form .display-product label .small.small {
+    display: inline-block;
+    font-size: 1rem; }
+  #classification-form .display-product label .small h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    transition: all 0.3s;
+    font-weight: 600; }
+    #classification-form .display-product label .small h3 span {
+      font-size: 0.9em;
+      font-weight: normal;
+      width: 100%;
+      display: block; }
+  #classification-form .display-product label .toogle-check {
       display: inline-block; }
   #classification-form .display-product:nth-child(4n+0) {
     border-right: none; }
@@ -80,7 +80,8 @@ and open the template in the editor.
   .default-3d:hover, .default-3d.active {
     top: 2px;
     border: 0;
-    background-color: #e6e6e6 !important;
+    background-color: #00a65a !important;
+    color: #FFF;
     -webkit-box-shadow: 0px 4px 0px #e0e0e0;
     -moz-box-shadow: 0px 4px 0px #e0e0e0;
     box-shadow: 0px 4px 0px #e0e0e0; }

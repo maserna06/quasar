@@ -21,7 +21,6 @@ $this->menu = array(
                     <h3 class="box-title">Clasificaciones <small>Informaciòn General</small></h3>
                 </div>  
                 <div class="box-body">
-
                     <div id="Classification_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row">
                             <div class="col-sm-6"></div>
@@ -44,7 +43,6 @@ $this->menu = array(
                                     'dataProvider' => $model->search(),
                                     'filter' => $model,
                                     'columns' => array(
-                                        //'classification_id',
                                         'classification_name',
                                         'classification_description',
                                         array(
@@ -54,16 +52,28 @@ $this->menu = array(
                                         ),
                                         array(
                                             'class' => 'CButtonColumn',
-                                            'template' => $isAdmin ? '{update}{delete}{view}' : '{update}{view}',
+                                            'template' => $isAdmin ? '{view}{update}{delete}' : '{update}{view}',
                                             'htmlOptions' => array('style' => 'width: 10%; text-align: center;'),
-                                            'buttons' => array
-                                                (
-                                                /* 'view' => array
-                                                  (
-                                                  'options' => array('rel' => 'tooltip', 'data-toggle' => 'tooltip', 'title' => "Ver"),
-                                                  'label' => '<i class="fa fa-eye" style="margin: 5px;"></i>',
-                                                  'imageUrl' => false,
-                                                  ), */
+                                            'buttons' => array(
+                                                'view' => array(
+                                                    'label' => '<i class="fa fa-building"></i> ',
+                                                    'imageUrl' => False,
+                                                    'url' => 'Yii::app()->controller->createUrl("wharehouse", array("id" => $data->primaryKey))',
+                                                    'options' => array(
+                                                        'title' => 'Bodegas',
+                                                        'data-toggle' => 'tooltip',
+                                                        'ajax' => array(
+                                                            'type' => 'get',
+                                                            'url' => 'js:$(this).attr("href")',
+                                                            'beforeSend' => 'function(){ $("#div-content").addClass("loadingwait"); }',
+                                                            'complete' => 'function(){ $("#div-content").removeClass("loadingwait"); }',
+                                                            'success' => 'function(data) { $("#bodyArchivos").html(data); $(".modal-title").html("Bodegas Relacionadas");
+                                                                $(".modal-dialog").width("70%");
+                                                                $(".modal-footer").html("<div><div class=\'col-md-6\'><div class=\'form-group\'><input class=\'btn btn-block btn-success btn-lg\' id=\'saveWharehouses\' name=\'save\' type=\'button\' value=\'Guardar\' /></div></div><div class=\'col-md-6\'><div class=\'form-group\'><input class=\'btn btn-block btn-danger btn-lg\' data-dismiss=\'modal\' type=\'button\' name=\'cancel\' value=\'Cancelar\' /></div></div></div>");
+                                                                $("#myModal").modal({keyboard: false}); }'
+                                                        ),
+                                                    )
+                                                ),                                
                                                 'update' => array
                                                     (
                                                     'options' => array('rel' => 'tooltip', 'data-toggle' => 'tooltip', 'title' => "Actualizar"),
@@ -75,22 +85,6 @@ $this->menu = array(
                                                     'options' => array('rel' => 'tooltip', 'data-toggle' => 'tooltip', 'title' => "Eliminar"),
                                                     'label' => '<i class="fa fa-times" style="margin: 5px;"></i>',
                                                     'imageUrl' => false,
-                                                ),
-                                                'view' => array(
-                                                    'label' => '<i class="fa fa-eye"></i> ',
-                                                    'imageUrl' => False,
-                                                    'url' => 'Yii::app()->controller->createUrl("wharehouse", array("id" => $data->primaryKey))',
-                                                    'options' => array(
-                                                        'title' => 'Bodegas',
-                                                        'data-toggle' => 'tooltip',
-                                                        'ajax' => array(
-                                                            'type' => 'get',
-                                                            'url' => 'js:$(this).attr("href")',
-                                                            'beforeSend' => 'function(){ $("#div-content").addClass("loadingwait"); }',
-                                                            'complete' => 'function(){ $("#div-content").removeClass("loadingwait"); }',
-                                                            'success' => 'function(data) { $("#bodyArchivos").html(data); $(".modal-title").html("Bodegas"); $("#myModal").modal({keyboard: false}); }'
-                                                        ),
-                                                    )
                                                 ),
                                             ),
                                         ),

@@ -214,7 +214,7 @@ foreach ($users as $user){
                     break;
                 }
               }else if(datos['estado'] == "danger")
-                $('.dataphone').css({"border-color": "red"})
+                $('.dataphone').css({"border-color": "#dd4b39 !important"})
             }
         });
     }

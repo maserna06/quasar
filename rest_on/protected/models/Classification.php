@@ -60,7 +60,7 @@ class Classification extends CActiveRecord
 	{
 		return array(
 			'classification_id' => 'ID',
-			'classification_name' => 'Nombre Clasificaciòn',
+			'classification_name' => 'Nombre Clasificación',
 			'classification_description' => 'Descripciòn',
 			'classification_status' => 'Estado',
 		);

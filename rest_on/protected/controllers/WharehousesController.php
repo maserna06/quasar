@@ -397,15 +397,13 @@ class WharehousesController extends Controller {
         'user_id' => $user_id,
         'wharehouse_id' => $wharehouse_id
       );      
-      //First Save Information  
+      //Create Scenario 
       $model = new WharehousesUser;
       $model->attributes = $att;
-      //Create Scenario
       if($apply_datafono == 1)
         $model->scenario = 'dataphone';
-      // Uncomment the following line if AJAX validation is needed     
       $this->performAjaxValidation($model);              
-      //Validate Save
+      //First Validate Save
       if($model->save()){
         //Second Update MultiCash State
         WharehousesUser::model()->updateAll(array('multicash' => $multicash), 'wharehouse_id = '+$wharehouse_id);
@@ -414,14 +412,16 @@ class WharehousesController extends Controller {
         //Third Delete
         $data = array('user_id' => $user_id, 'wharehouse_id' => $wharehouse_id);
         WharehousesUser::model()->deleteAllByAttributes($data);
+        //Four Reload Save
         $model = new WharehousesUser;
         $model->attributes = $att;
         $model->save();
+        //Five 
         $datosConf = array('estado' => 'success', 'mensaje' => 'Vendedor configurado con exito.', 'id' => $wharehouse_id, "users" => WharehousesExtend::getUsersWharehouses($wharehouse_id), 'multicash' => $multicash);
       }
       else
         $datosConf = array('estado' => 'danger', 'mensaje' => 'Datos de configuración vacios; campos marcados con ( * ) son obligatorios.'); 
-    }else{
+    }else{      
       //First Update MultiCash State
       WharehousesUser::model()->updateAll(array('multicash' => $multicash, 'daily_close' => $daily_close, 'cash_ip' => $cash_ip, 'cash_port' => $cash_port, 'dataphone_ip' => $dataphone_ip, 'dataphone_port' => $dataphone_port, 'dataphone_name' => $dataphone_name), 'wharehouse_id = '+$wharehouse_id);
       //Return Data

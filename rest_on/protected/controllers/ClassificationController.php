@@ -40,21 +40,6 @@ class ClassificationController extends Controller {
   }
 
   /**
-   * Displays a particular model.
-   * @param integer $id the ID of the model to be displayed
-   */
-//  public function actionView($id) {
-//
-//
-//    if (Yii::app()->user->getId() === null)
-//      $this->redirect(array('site/login'));
-//
-//    $this->render('view', array(
-//        'model' => $this->loadModel($id),
-//    ));
-//  }
-
-  /**
    * Creates a new model.
    * If creation is successful, the browser will be redirected to the 'view' page.
    */
@@ -186,8 +171,6 @@ class ClassificationController extends Controller {
     if (Yii::app()->user->getId() === null)
       $this->redirect(array('site/login'));
 
-
-
     $model = $this->loadModel($id);
 
     //Delete ClassificationProduct
@@ -220,31 +203,36 @@ class ClassificationController extends Controller {
     $this->render('index', array(
         'model' => $model,
     ));
-  }
-
-  /**
-   * Manages all models.
-   */
-  public function actionAdmin() {
-    if (Yii::app()->user->getId() === null)
-      $this->redirect(array('site/login'));
-
-    $model = new Classification('search');
-    $model->unsetAttributes();  // clear any default values
-    if (isset($_GET['Classification']))
-      $model->attributes = $_GET['Classification'];
-
-    $this->render('admin', array(
-        'model' => $model,
-    ));
-  }
+  }  
   
   /*
    * validar bodegas asigandas a clasificación
-   */
-  
+   */  
   public function actionWharehouse($id){
-      print_r($id);exit;
+    if (Yii::app()->user->getId() === null)
+      $this->redirect(array('site/login'));
+
+    $wharehouses = Yii::app()->request->getPost('wharehouse');
+
+    //Save Wharehouse
+    if ($wharehouses) {
+      $model = new WharehousesClassification;
+      $model->deleteAllByAttributes(['classification_id' => $id]);        
+      foreach ($wharehouses as $wharehouse) {
+        $model = new WharehousesClassification;
+        $model->attributes = [
+            'classification_id' => $id,
+            'wharehouse_id' => $wharehouse
+        ];
+        $model->save();
+      }
+      $datosConf = array('estado' => 'success', 'mensaje' => 'Bodegas en Clasificacion configuradas correctamente.');
+    }
+
+    $wharehouses = ClassificationExtend::getWharehouses($id);      
+    $this->renderPartial('modalWharehouses', array(
+        'wharehouses' => $wharehouses
+    ));
   }
 
   /**
