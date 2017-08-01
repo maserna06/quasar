@@ -47,156 +47,157 @@ $this->menu = array(
   'user_status',
   ),
   )); */ ?>
+<section class="content">
+  <div class="invoice"><!-- title row -->
+      <div class="row">
+          <div class="col-xs-12">
+              <h2 class="page-header">
+                  <i class="fa fa-file-text"></i> Detalle de Usuario
+                  <small class="pull-right">Fecha: <?php echo date('Y-m-d'); ?></small>
+              </h2>
+          </div><!-- /.col -->
+      </div><!-- info row -->
+      <div class="row invoice-info">
+          <div class="col-sm-4 invoice-col">
+              Usuario      
+              <address>
+                  <strong><?php echo $model->user_name; ?></strong><br>
+                  <?php echo $model->user_firtsname; ?><br>
+                  <?php echo $model->user_lastname; ?><br>
+                  Cedula: <?php echo $model->user_id; ?><br>
+                  Email: <?php echo $model->user_email; ?>
+              </address>
+          </div><!-- /.col -->
+          <div class="col-sm-4 invoice-col">
+              De
+              <address>
+                  <strong>
+                      <?php
+                      if (!empty($model->city_id)) {
+                          $city = Cities::model()->findByPk($model->city_id);
+                          echo $city->city_name;
+                      } else {
+                          echo "";
+                      }
+                      echo ", ";
+                      ?></strong>
+                  <?php
+                  if (!empty($model->deparment_id)) {
+                      $deparment = Departaments::model()->findByPk($model->deparment_id);
+                      echo $deparment->deparment_name;
+                  } else {
+                      echo "";
+                  }
+                  ?>          
+                  <br>
+                  <br>
+                  Empresa: 
+                  <?php
+                  if (!empty($model->company_id)) {
+                      $company = Companies::model()->findByPk($model->company_id);
+                      echo $company->company_name;
+                  } else {
+                      echo "";
+                  }
+                  ?>
+                  <br>
+                  Direccion: <?php echo $model->user_address; ?><br>
+                  Telefono: <?php echo $model->user_phone; ?>
+              </address>
+          </div><!-- /.col -->
+          <div class="col-sm-4 invoice-col">
+              <b>Otros Datos</b><br>
+              <br>
+              <b>Activacion:</b> <?php echo $model->user_lockoutenddateutc; ?><br>
+              <b>Celular:</b> <?php echo $model->user_phonenumber; ?><br>
+              <b>Estado:</b> 
+              <?php
+              if ($model->user_status == "1") {
+                  echo "Activo";
+              } else {
+                  echo "Inactivo";
+              }
+              ?>
+              <br>
+              <?php
+              echo CHtml::button('Asignar Bodegas', array(
+                'class' => 'btn btn-primary vendor-role-config',
+                'style'=>$isVendor && count($bodegas)>0?'':'display:none',
+                'id'=>'bod'
+              ));
+              if (Yii::app()->authManager->isAssigned('vendor', $model->user_id) && count($bodegas)>0 ){
+              }else {
+                  if(!$model->company_id){
+                      echo '<div class="alert alert-danger"  style="">Usuario no tiene EMPRESA asociada.</div>';
+                  } else if(count($bodegas)==0) {
+                       echo '<div class="alert alert-danger"  style="">Empresa no tiene Bodegas asociadas</div>';
+                  }
+              }
+                  ?>
+          </div><!-- /.col -->
+      </div><!-- /.row -->
+      <?php // if (Yii::app()->authManager->isAssigned('vendor', $model->user_id) && count($bodegas)>0){ ?>
+      <div id="bodegas" style="display: none;" class="vendor-role-config">
+          <div class="row">
+              <div class="col-xs-12" >
+                  <h2 class="page-header">
+                      <i class="fa fa-map-pin"></i> Asignar Bodegas
+                      <small class="pull-right">Fecha: <?php echo date('Y-m-d'); ?></small>
+                  </h2>
+              </div><!-- /.col -->
 
-<section class="invoice"><!-- title row -->
-    <div class="row">
-        <div class="col-xs-12">
-            <h2 class="page-header">
-                <i class="fa fa-file-text"></i> Detalle de Usuario
-                <small class="pull-right">Fecha: <?php echo date('Y-m-d'); ?></small>
-            </h2>
-        </div><!-- /.col -->
-    </div><!-- info row -->
-    <div class="row invoice-info">
-        <div class="col-sm-4 invoice-col">
-            Usuario      
-            <address>
-                <strong><?php echo $model->user_name; ?></strong><br>
-                <?php echo $model->user_firtsname; ?><br>
-                <?php echo $model->user_lastname; ?><br>
-                Cedula: <?php echo $model->user_id; ?><br>
-                Email: <?php echo $model->user_email; ?>
-            </address>
-        </div><!-- /.col -->
-        <div class="col-sm-4 invoice-col">
-            De
-            <address>
-                <strong>
-                    <?php
-                    if (!empty($model->city_id)) {
-                        $city = Cities::model()->findByPk($model->city_id);
-                        echo $city->city_name;
-                    } else {
-                        echo "";
-                    }
-                    echo ", ";
-                    ?></strong>
-                <?php
-                if (!empty($model->deparment_id)) {
-                    $deparment = Departaments::model()->findByPk($model->deparment_id);
-                    echo $deparment->deparment_name;
-                } else {
-                    echo "";
-                }
-                ?>          
-                <br>
-                <br>
-                Empresa: 
-                <?php
-                if (!empty($model->company_id)) {
-                    $company = Companies::model()->findByPk($model->company_id);
-                    echo $company->company_name;
-                } else {
-                    echo "";
-                }
-                ?>
-                <br>
-                Direccion: <?php echo $model->user_address; ?><br>
-                Telefono: <?php echo $model->user_phone; ?>
-            </address>
-        </div><!-- /.col -->
-        <div class="col-sm-4 invoice-col">
-            <b>Otros Datos</b><br>
-            <br>
-            <b>Activacion:</b> <?php echo $model->user_lockoutenddateutc; ?><br>
-            <b>Celular:</b> <?php echo $model->user_phonenumber; ?><br>
-            <b>Estado:</b> 
-            <?php
-            if ($model->user_status == "1") {
-                echo "Activo";
-            } else {
-                echo "Inactivo";
-            }
-            ?>
-            <br>
-            <?php
-            echo CHtml::button('Asignar Bodegas', array(
-              'class' => 'btn btn-primary vendor-role-config',
-              'style'=>$isVendor && count($bodegas)>0?'':'display:none',
-              'id'=>'bod'
-            ));
-            if (Yii::app()->authManager->isAssigned('vendor', $model->user_id) && count($bodegas)>0 ){
-            }else {
-                if(!$model->company_id){
-                    echo '<div class="alert alert-danger"  style="">Usuario no tiene EMPRESA asociada.</div>';
-                } else if(count($bodegas)==0) {
-                     echo '<div class="alert alert-danger"  style="">Empresa no tiene Bodegas asociadas</div>';
-                }
-            }
-                ?>
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-    <?php // if (Yii::app()->authManager->isAssigned('vendor', $model->user_id) && count($bodegas)>0){ ?>
-    <div id="bodegas" style="display: none;" class="vendor-role-config">
-        <div class="row">
-            <div class="col-xs-12" >
-                <h2 class="page-header">
-                    <i class="fa fa-map-pin"></i> Asignar Bodegas
-                    <small class="pull-right">Fecha: <?php echo date('Y-m-d'); ?></small>
-                </h2>
-            </div><!-- /.col -->
+              <div id="datos-taxes" style="padding: 1%;" >
+                  <?php $this->renderPartial('bodegas', array('bodegas' => $bodegas, 'model' => $model)); ?>
+              </div>
 
-            <div id="datos-taxes" style="padding: 1%;" >
-                <?php $this->renderPartial('bodegas', array('bodegas' => $bodegas, 'model' => $model)); ?>
-            </div>
+          </div>
+      </div>
+      <?php // } ?>
 
-        </div>
-    </div>
-    <?php // } ?>
+      <div class="row">
+          <div class="col-xs-6">
+              <h2 class="page-header">
+                  <i class="fa fa-picture-o"></i> Imagen del Usuario
+              </h2>
+          </div><!-- /.col -->
+          <div class="col-sm6 invoice-col">
+              <h2 class="page-header">
+                  <i class="fa fa-group"></i> Roles
+              </h2>
+          </div><!-- /.col -->
+      </div><!-- info row -->
+      <div class="row">
+          <div class="col-xs-6">
+              <div class="form-group">
+                  <div class="row">
+                      <div class="col-xs-2"></div>
+                      <div class="col-xs-8">
+                          <?php echo CHtml::image(Yii::app()->theme->baseUrl. '/dist/img/'.$model->user_photo, '', array('class' => 'img-thumbnail', "data-toggle" => "tooltip", "title" => $model->user_name)) ?>
+                      </div>
+                      <div class="col-xs-2"></div>
+                  </div>
+              </div>
+          </div>
 
-    <div class="row">
-        <div class="col-xs-6">
-            <h2 class="page-header">
-                <i class="fa fa-picture-o"></i> Imagen del Usuario
-            </h2>
-        </div><!-- /.col -->
-        <div class="col-sm6 invoice-col">
-            <h2 class="page-header">
-                <i class="fa fa-group"></i> Roles
-            </h2>
-        </div><!-- /.col -->
-    </div><!-- info row -->
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-xs-2"></div>
-                    <div class="col-xs-8">
-                        <?php echo CHtml::image(Yii::app()->theme->baseUrl. '/dist/img/'.$model->user_photo, '', array('class' => 'img-thumbnail', "data-toggle" => "tooltip", "title" => $model->user_name)) ?>
-                    </div>
-                    <div class="col-xs-2"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6">
-          <?php echo $this->renderPartial('_roles',['model'=>$model]); ?>
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-    <hr>
-    <br>
-    <!-- this row will not appear when printing -->
-    <div class="row no-print">
-        <div class="col-xs-12">
-          <a href="#" target="_blank" class="btn btn-default printing" data-section="section-to-print"><i class="fa fa-print"></i> Imprimir</a>
-          <a href="javascript:;" target="_blank" class="btn btn-primary pull-right to-canvas" style="margin-right: 5px;">
-            <i class="fa fa-download"></i> Generar PDF
-          </a>
-        </div>
-    </div>
-    <form id="form_save_pdf" name="form_save_pdf" target="_blank" method="post" action="<?=Yii::app()->createAbsoluteUrl('user/'.$model->user_id,['format'=>'pdf'])?>">
-        <input type="hidden" name="image" id="image-to-pdf" />
-    </form>
+          <div class="col-xs-6">
+            <?php echo $this->renderPartial('_roles',['model'=>$model]); ?>
+          </div><!-- /.col -->
+      </div><!-- /.row -->
+      <hr>
+      <br>
+      <!-- this row will not appear when printing -->
+      <div class="row no-print">
+          <div class="col-xs-12">
+            <a href="#" target="_blank" class="btn btn-default printing" data-section="section-to-print"><i class="fa fa-print"></i> Imprimir</a>
+            <a href="javascript:;" target="_blank" class="btn btn-primary pull-right to-canvas" style="margin-right: 5px;">
+              <i class="fa fa-download"></i> Generar PDF
+            </a>
+          </div>
+      </div>
+      <form id="form_save_pdf" name="form_save_pdf" target="_blank" method="post" action="<?=Yii::app()->createAbsoluteUrl('user/'.$model->user_id,['format'=>'pdf'])?>">
+          <input type="hidden" name="image" id="image-to-pdf" />
+      </form>
+  </div>
 </section>
 
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/plugins/bootstrap-switch/docs/js/highlight.js"></script>

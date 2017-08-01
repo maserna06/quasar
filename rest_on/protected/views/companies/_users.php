@@ -24,7 +24,7 @@ $user=U::getInstance();
             <i class="fa fa-pencil"></i>
             </button>
         </h4>
-        <p><?php// echo $data->description;?></p>
+        <p><?php #echo $data->description; ?></p>
         <hr>
       </li>
   <?php endforeach;?>

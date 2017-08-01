@@ -24,123 +24,123 @@ foreach ($users as $user){
 }
 
 ?>
+<section class="content">
+  <div class="invoice" id="section-to-print"><!-- title row -->
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="page-header">
+          <i class="fa fa-file-text"></i> Detalle de Bodega
+          <small class="pull-right">Fecha: <?php echo date('Y-m-d'); ?></small>
+        </h2>
+      </div><!-- /.col -->
+    </div><!-- info row -->
+    <div class="row invoice-info">
+      <div class="col-sm-4 invoice-col">
+        <strong>Bodega</strong>    
+        <address>
+          <strong><?php echo $model->wharehouse_name; ?></strong>
+        </address>
+      </div><!-- /.col -->
+      <div class="col-sm-6 invoice-col">
+        <strong>Datos bodega</strong>
+        <address>
+          Direccion: <?php echo $model->wharehouse_address ?><br>
+          Tel&eacute;fono: <?php echo $model->wharehouse_phone ?>
+        </address>
+      </div><!-- /.col -->
+      <div class="col-sm-2 invoice-col" style="text-align: right;">
+        <i class="fa fa-gears configGeneral" rel="tooltip" data-toggle="tooltip" data-original-title="Configuración General" style="cursor: pointer; color: #3c8dbc; display: none;"></i>
+        <input type="hidden" class="multicash" value="<?php echo ($multicash != '')?$multicash:'#'; ?>">
+        <input type="hidden" class="wharehouse_id" value="<?php echo $model->wharehouse_id; ?>">
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+    <br>
+    <!-- Table row -->
+    <div class="row">
+      <div class="col-sm-12 invoice-col">
+        <h2 class="page-header">
+          <i class="fa fa-users"></i> Panel de usuarios Vendedores
+          <small class="pull-right"> Asignación de vendedores a la Bodega.</small>
+        </h2>
+      </div><!-- /.col -->
 
-<section class="invoice" id="section-to-print"><!-- title row -->
-  <div class="row">
-    <div class="col-xs-12">
-      <h2 class="page-header">
-        <i class="fa fa-file-text"></i> Detalle de Bodega
-        <small class="pull-right">Fecha: <?php echo date('Y-m-d'); ?></small>
-      </h2>
-    </div><!-- /.col -->
-  </div><!-- info row -->
-  <div class="row invoice-info">
-    <div class="col-sm-4 invoice-col">
-      <strong>Bodega</strong>    
-      <address>
-        <strong><?php echo $model->wharehouse_name; ?></strong>
-      </address>
-    </div><!-- /.col -->
-    <div class="col-sm-6 invoice-col">
-      <strong>Datos bodega</strong>
-      <address>
-        Direccion: <?php echo $model->wharehouse_address ?><br>
-        Tel&eacute;fono: <?php echo $model->wharehouse_phone ?>
-      </address>
-    </div><!-- /.col -->
-    <div class="col-sm-2 invoice-col" style="text-align: right;">
-      <i class="fa fa-gears configGeneral" rel="tooltip" data-toggle="tooltip" data-original-title="Configuración General" style="cursor: pointer; color: #3c8dbc; display: none;"></i>
-      <input type="hidden" class="multicash" value="<?php echo ($multicash != '')?$multicash:'#'; ?>">
-      <input type="hidden" class="wharehouse_id" value="<?php echo $model->wharehouse_id; ?>">
-    </div><!-- /.col -->
-  </div><!-- /.row -->
-  <br>
-  <!-- Table row -->
-  <div class="row">
-    <div class="col-sm-12 invoice-col">
-      <h2 class="page-header">
-        <i class="fa fa-users"></i> Panel de usuarios Vendedores
-        <small class="pull-right"> Asignación de vendedores a la Bodega.</small>
-      </h2>
-    </div><!-- /.col -->
-
-    <div class="col-sm-6 margin-bottom">
-    </div>
-    <form class="col-sm-6" onsubmit="return false;">
-      <div class="form-group">
-
-        <div class="input-group">
-          <span class="input-group-addon ">Vendedor</span>
-          <?php
-          echo CHtml::textField('producto', '', [
-              'id' => 'vendor-autocomplete',
-              'size' => '40'
-          ]);
-          ?>
-          <span class="input-group-btn">
-            <button class="btn btn-primary btn-add-vendor">Agregar</button>
-          </span>
-        </div>
+      <div class="col-sm-6 margin-bottom">
       </div>
-    </form>
-    <div class="col-sm-12">
-      <div id="inner-content-users">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-          <table class="table table-striped table-bordered" id="head-edit-wharehouses-users">
-            <thead>
-              <tr class="tblEncabezado">
-                <th>Id</th>
-                <th>Usuario</th>
-                <th>Nombre</th>
-                <th>Estado</th>
-                <th class='columConfig' style="display: none;">Config</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="edit-wharehouses-users">
-              <?php foreach ($users as $user): ?>
-                <tr>
-                  <td><?php echo $user['user_id'] ?></td>
-                  <td><?php echo $user['user_name'] ?></td>
-                  <td><?php echo $user['user_firtsname'] . ' ' . $user['user_lastname'] ?></td>
-                  <td><?php echo ($user['user_status']) ? 'Activo' : 'Inactivo'; ?></td>
-                  <td class='columConfig' style="display: none;">
-                  <?php 
-                    echo "<i class='fa fa-gears configUser' name=". $user['user_id'] ." rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i>"; 
-                  ?>
-                  </td>
-                  <td>
-                  <?php
-                    echo CHtml::link("On", array("wharehouses/removeuser", "id" => $model->wharehouse_id, "item" => $user['user_id']), array("class" => "btn btn-success pull-right"));
-                  ?>                      
-                  </td>
+      <form class="col-sm-6" onsubmit="return false;">
+        <div class="form-group">
+
+          <div class="input-group">
+            <span class="input-group-addon ">Vendedor</span>
+            <?php
+            echo CHtml::textField('producto', '', [
+                'id' => 'vendor-autocomplete',
+                'size' => '40'
+            ]);
+            ?>
+            <span class="input-group-btn">
+              <button class="btn btn-primary btn-add-vendor">Agregar</button>
+            </span>
+          </div>
+        </div>
+      </form>
+      <div class="col-sm-12">
+        <div id="inner-content-users">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-10">
+            <table class="table table-striped table-bordered" id="head-edit-wharehouses-users">
+              <thead>
+                <tr class="tblEncabezado">
+                  <th>Id</th>
+                  <th>Usuario</th>
+                  <th>Nombre</th>
+                  <th>Estado</th>
+                  <th class='columConfig' style="display: none;">Config</th>
+                  <th></th>
                 </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
+              </thead>
+              <tbody id="edit-wharehouses-users">
+                <?php foreach ($users as $user): ?>
+                  <tr>
+                    <td><?php echo $user['user_id'] ?></td>
+                    <td><?php echo $user['user_name'] ?></td>
+                    <td><?php echo $user['user_firtsname'] . ' ' . $user['user_lastname'] ?></td>
+                    <td><?php echo ($user['user_status']) ? 'Activo' : 'Inactivo'; ?></td>
+                    <td class='columConfig' style="display: none;">
+                    <?php 
+                      echo "<i class='fa fa-gears configUser' name=". $user['user_id'] ." rel='tooltip' data-toggle='tooltip' data-original-title='Configuración Usuario' style='cursor: pointer; color: #3c8dbc;'></i>"; 
+                    ?>
+                    </td>
+                    <td>
+                    <?php
+                      echo CHtml::link("On", array("wharehouses/removeuser", "id" => $model->wharehouse_id, "item" => $user['user_id']), array("class" => "btn btn-success pull-right"));
+                    ?>                      
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-1"></div>
         </div>
-        <div class="col-sm-1"></div>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+    <br>
+    <!-- this row will not appear when printing -->
+    <br>
+    <!-- this row will not appear when printing -->
+    <div class="row no-print">
+      <div class="col-xs-12">
+        <a href="#" target="_blank" class="btn btn-default printing" data-section="section-to-print"><i class="fa fa-print"></i> Imprimir</a>
+        <a href="javascript:;" target="_blank" class="btn btn-primary pull-right to-canvas" style="margin-right: 5px;">
+          <i class="fa fa-download"></i> Generar PDF
+        </a>
       </div>
-    </div><!-- /.col -->
-  </div><!-- /.row -->
-  <br>
-  <!-- this row will not appear when printing -->
-  <br>
-  <!-- this row will not appear when printing -->
-  <div class="row no-print">
-    <div class="col-xs-12">
-      <a href="#" target="_blank" class="btn btn-default printing" data-section="section-to-print"><i class="fa fa-print"></i> Imprimir</a>
-      <a href="javascript:;" target="_blank" class="btn btn-primary pull-right to-canvas" style="margin-right: 5px;">
-        <i class="fa fa-download"></i> Generar PDF
-      </a>
     </div>
+    <form id="form_save_pdf" name="form_save_pdf" target="_blank" method="post" action="<?= Yii::app()->createAbsoluteUrl('wharehouses/' . $model->wharehouse_id, ['format' => 'pdf']) ?>">
+      <input type="hidden" name="image" id="image-to-pdf" />
+    </form>
   </div>
-  <form id="form_save_pdf" name="form_save_pdf" target="_blank" method="post" action="<?= Yii::app()->createAbsoluteUrl('wharehouses/' . $model->wharehouse_id, ['format' => 'pdf']) ?>">
-    <input type="hidden" name="image" id="image-to-pdf" />
-  </form>
 </section>
-
 <?php $this->renderPartial('modalConfig', ['model' => $model]); ?>
 
 
@@ -213,8 +213,10 @@ foreach ($users as $user){
                   case 1 : isMulticash(datos);
                     break;
                 }
-              }else if(datos['estado'] == "danger")
-                $('.dataphone').css({"border-color": "#dd4b39 !important"})
+              }else if(datos['estado'] == "danger"){
+                $('.dataphone').css({"border-color": "#dd4b39"});
+                console.log('enta!');
+              }
             }
         });
     }

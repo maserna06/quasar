@@ -20,118 +20,119 @@ $this->menu = array(
     array('label' => ($isSuper ? 'Administrar' : 'Ver') . ' Empresas', 'url' => array('index')),
 );
 ?>
-
-<section class="invoice" id="section-to-print"><!-- title row -->
-    <div class="row">
-        <div class="col-xs-12">
-            <h2 class="page-header">
-                <i class="fa fa-file-text"></i> Detalle de Empresa
-                <small class="pull-right">Fecha: <?php echo date('Y-m-d'); ?></small>
-            </h2>
-        </div><!-- /.col -->
-    </div><!-- info row -->
-    <div class="row invoice-info">
-        <div class="col-sm-4 invoice-col">
-            Empresa      
-            <address>
-                <strong><?php echo $model->company_name; ?></strong><br>
-                Nit: <?php echo $model->company_id; ?><br>
-                <br>
-                Direccion: <?php echo $model->company_address; ?><br>
-                Telefono: <?php echo $model->company_phone; ?>
-            </address>
-        </div><!-- /.col -->
-        <div class="col-sm-4 invoice-col">
-            De
-            <address>
-                <strong>
+<section class="content">
+    <div class="invoice" id="section-to-print"><!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-file-text"></i> Detalle de Empresa
+                    <small class="pull-right">Fecha: <?php echo date('Y-m-d'); ?></small>
+                </h2>
+            </div><!-- /.col -->
+        </div><!-- info row -->
+        <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+                Empresa      
+                <address>
+                    <strong><?php echo $model->company_name; ?></strong><br>
+                    Nit: <?php echo $model->company_id; ?><br>
+                    <br>
+                    Direccion: <?php echo $model->company_address; ?><br>
+                    Telefono: <?php echo $model->company_phone; ?>
+                </address>
+            </div><!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                De
+                <address>
+                    <strong>
+                        <?php
+                        if (!empty($model->city_id)) {
+                            $city = Cities::model()->findByPk($model->city_id);
+                            echo $city->city_name;
+                        } else {
+                            echo "";
+                        }
+                        echo ", ";
+                        ?></strong>
                     <?php
-                    if (!empty($model->city_id)) {
-                        $city = Cities::model()->findByPk($model->city_id);
-                        echo $city->city_name;
+                    if (!empty($model->deparment_id)) {
+                        $deparment = Departaments::model()->findByPk($model->deparment_id);
+                        echo $deparment->deparment_name;
                     } else {
                         echo "";
                     }
-                    echo ", ";
-                    ?></strong>
+                    ?>          
+                    <br>
+                    <br>
+                </address>
+            </div><!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <b>Otros Datos</b><br>
+                <br>      
+                <b>Url: </b><a href="<?php echo $model->company_url; ?>" target="_blank"><?php echo $model->company_url; ?></a><br>
+                <b>Estado:</b> 
                 <?php
-                if (!empty($model->deparment_id)) {
-                    $deparment = Departaments::model()->findByPk($model->deparment_id);
-                    echo $deparment->deparment_name;
+                if ($model->company_status == "1") {
+                    echo "Activo";
                 } else {
-                    echo "";
+                    echo "Inactivo";
                 }
-                ?>          
-                <br>
-                <br>
-            </address>
-        </div><!-- /.col -->
-        <div class="col-sm-4 invoice-col">
-            <b>Otros Datos</b><br>
-            <br>      
-            <b>Url: </b><a href="<?php echo $model->company_url; ?>" target="_blank"><?php echo $model->company_url; ?></a><br>
-            <b>Estado:</b> 
-            <?php
-            if ($model->company_status == "1") {
-                echo "Activo";
-            } else {
-                echo "Inactivo";
-            }
-            ?>
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-    <div class="row">
-        <div class="col-xs-6">
-            <h2 class="page-header">
-                <i class="fa fa-picture-o"></i> Logo de la Empresa
-            </h2>
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-xs-4"></div>
-                        <div class="col-xs-4">
-                            <?php
-                            $img = ($model->company_logo) ? $model->company_logo : 'company-350x350.png';
-                            echo CHtml::image(Yii::app()->theme->baseUrl . '/dist/img/' . $img, '', array('class' => 'img-thumbnail', "data-toggle" => "tooltip", "title" => $model->company_name));
-                            ?>
+                ?>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        <div class="row">
+            <div class="col-xs-6">
+                <h2 class="page-header">
+                    <i class="fa fa-picture-o"></i> Logo de la Empresa
+                </h2>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-4"></div>
+                            <div class="col-xs-4">
+                                <?php
+                                $img = ($model->company_logo) ? $model->company_logo : 'company-350x350.png';
+                                echo CHtml::image(Yii::app()->theme->baseUrl . '/dist/img/' . $img, '', array('class' => 'img-thumbnail', "data-toggle" => "tooltip", "title" => $model->company_name));
+                                ?>
+                            </div>
+                            <div class="col-xs-4"></div>
                         </div>
-                        <div class="col-xs-4"></div>
                     </div>
                 </div>
+            </div><!-- /.col -->
+            <div class="col-xs-6">
+                <h2 class="page-header">
+                    <i class="fa fa-users"></i> Panel de Usuarios
+                </h2> 
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="row">
+                            <?php echo $this->renderPartial('_users', array('users' => $users)); ?>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div><!-- /.col -->
-        <div class="col-xs-6">
-            <h2 class="page-header">
-                <i class="fa fa-users"></i> Panel de Usuarios
-            </h2> 
+        </div><!-- info row -->
+        <div class="row">
+
+        </div>
+        <!-- this row will not appear when printing -->
+        <!-- this row will not appear when printing -->
+        <div class="row no-print">
             <div class="col-xs-12">
-                <div class="form-group">
-                    <div class="row">
-                        <?php echo $this->renderPartial('_users', array('users' => $users)); ?>
-                    </div>
-                </div>
+                <a href="#" target="_blank" class="btn btn-default printing" data-section="section-to-print"><i class="fa fa-print"></i> Imprimir</a>
+
+                <a href="javascript:;" target="_blank" class="btn btn-primary pull-right to-canvas" style="margin-right: 5px;">
+                    <i class="fa fa-download"></i> Generar PDF
+                </a>
             </div>
-
         </div>
-    </div><!-- info row -->
-    <div class="row">
 
+        <form id="form_save_pdf" name="form_save_pdf" target="_blank" method="post" action="<?= Yii::app()->createAbsoluteUrl('companies/' . $model->company_id, ['format' => 'pdf']) ?>">
+            <input type="hidden" name="image" id="image-to-pdf" />
+        </form>
     </div>
-    <!-- this row will not appear when printing -->
-    <!-- this row will not appear when printing -->
-    <div class="row no-print">
-        <div class="col-xs-12">
-            <a href="#" target="_blank" class="btn btn-default printing" data-section="section-to-print"><i class="fa fa-print"></i> Imprimir</a>
-
-            <a href="javascript:;" target="_blank" class="btn btn-primary pull-right to-canvas" style="margin-right: 5px;">
-                <i class="fa fa-download"></i> Generar PDF
-            </a>
-        </div>
-    </div>
-
-    <form id="form_save_pdf" name="form_save_pdf" target="_blank" method="post" action="<?= Yii::app()->createAbsoluteUrl('companies/' . $model->company_id, ['format' => 'pdf']) ?>">
-        <input type="hidden" name="image" id="image-to-pdf" />
-    </form>
 </section>
 <?php echo $this->renderPartial('../_modal'); ?> 
 <script src="<?php echo Yii::app()->theme->baseUrl; ?>/plugins/bootstrap-switch/docs/js/highlight.js"></script>
