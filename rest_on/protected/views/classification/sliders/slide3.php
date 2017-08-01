@@ -7,10 +7,12 @@
                 <div class="col-xs-12 col-sm-6 col-md-3 parent-display">
                   <div class="display-product default-3d ">
                     <label for="wharehouse-<?php echo $wharehouse['wharehouse_id'] ?>">
-                      <div class="small">
+                      <div class="smalls">
                         <h3>
                           <?php echo $wharehouse['wharehouse_name'] ?>
-                          <span><?php echo ($wharehouse['company_id']) ?></span>
+                          <span style="margin-top: 1%;">
+                              <b>DIR: </b><?php echo ($wharehouse['wharehouse_address']) ?>
+                          </span>
                         </h3>
                       </div>
                       <div class="hidden toogle-check btn btn-danger">Off</div>

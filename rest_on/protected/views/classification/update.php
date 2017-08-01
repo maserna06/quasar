@@ -109,6 +109,9 @@ $form = $this->beginWidget('CActiveForm', array(
     $('.small').children('h3').slimScroll({
       height: '45px'
     });
+    $('.smalls').children('h3').slimScroll({
+      height: '45px'
+    });
   });
 </script>
 

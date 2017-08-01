@@ -53,6 +53,32 @@ and open the template in the editor.
   #classification-form .display-product:hover label .small h3 {
     text-shadow: 1px 1px 5px #6d6d6d; }
 
+  #classification-form .display-product label .smalls {
+    vertical-align: middle;
+    text-align: center;
+    width: 90%;
+    text-align: left;
+    margin-top: 6px; }
+  #classification-form .display-product label .smalls.smalls {
+    display: inline-block;
+    font-size: 1rem; }
+  #classification-form .display-product label .smalls h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    transition: all 0.3s;
+    font-weight: 600; }
+    #classification-form .display-product label .smalls h3 span {
+      font-size: 0.9em;
+      font-weight: normal;
+      width: 100%;
+      display: block; }
+  #classification-form .display-product label .toogle-check {
+      display: inline-block; }
+  #classification-form .display-product:nth-child(4n+0) {
+    border-right: none; }
+  #classification-form .display-product:hover label .smalls h3 {
+    text-shadow: 1px 1px 5px #6d6d6d; }
+
 .default-3d {
   position: relative;
   border: 0 !important;
@@ -75,25 +101,24 @@ and open the template in the editor.
   -webkit-box-shadow: 0px 6px 0px #e0e0e0;
   -moz-box-shadow: 0px 6px 0px #e0e0e0;
   box-shadow: 0px 6px 0px #e0e0e0; }
-  .default-3d:focus {
-    outline: 0; }
-  .default-3d:hover, .default-3d.active {
-    top: 2px;
-    border: 0;
-    background-color: #00a65a !important;
-    color: #FFF;
-    -webkit-box-shadow: 0px 4px 0px #e0e0e0;
-    -moz-box-shadow: 0px 4px 0px #e0e0e0;
-    box-shadow: 0px 4px 0px #e0e0e0; }
-  .default-3d:active {
-    top: 6px;
-    -webkit-box-shadow: inset 0px 3px 0px #e0e0e0;
-    -moz-box-shadow: inset 0px 3px 0px #e0e0e0;
-    box-shadow: inset 0px 3px 0px #e0e0e0; }
-
+.default-3d:focus {
+  outline: 0; }
+.default-3d.active {
+  top: 3px;
+  border: 0;
+  background-color: #008d4c !important;
+  color: #FFF;
+  -webkit-box-shadow: 0px 4px 0px #e0e0e0;
+  -moz-box-shadow: 0px 4px 0px #e0e0e0;
+  box-shadow: 0px 4px 0px #e0e0e0; }
+.default-3d:hover, .default-3d:active{
+  top: 6px;
+  -webkit-box-shadow: inset 0px 3px 0px #00a65a;
+  -moz-box-shadow: inset 0px 3px 0px #00a65a;
+  box-shadow: inset 0px 3px 0px #00a65a; }
 @media (max-width: 768px) {
-  .toogle-check {
-    float: right;
-    margin-top: 10px; } }
+.toogle-check {
+  float: right;
+  margin-top: 10px; } }
 
 /*# sourceMappingURL=classifications.css.map */

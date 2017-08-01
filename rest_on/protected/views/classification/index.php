@@ -69,7 +69,7 @@ $this->menu = array(
                                                             'complete' => 'function(){ $("#div-content").removeClass("loadingwait"); }',
                                                             'success' => 'function(data) { $("#bodyArchivos").html(data); $(".modal-title").html("Bodegas Relacionadas");
                                                                 $(".modal-dialog").width("70%");
-                                                                $(".modal-footer").html("<div><div class=\'col-md-6\'><div class=\'form-group\'><input class=\'btn btn-block btn-success btn-lg\' id=\'saveWharehouses\' name=\'save\' type=\'button\' value=\'Guardar\' /></div></div><div class=\'col-md-6\'><div class=\'form-group\'><input class=\'btn btn-block btn-danger btn-lg\' data-dismiss=\'modal\' type=\'button\' name=\'cancel\' value=\'Cancelar\' /></div></div></div>");
+                                                                $(".modal-footer").html("<div><div class=\'col-md-6\'><div class=\'form-group\'><input class=\'btn btn-block btn-success btn-lg\' onclick=\'saveWharehouses();\' name=\'save\' type=\'button\' value=\'Guardar\' /></div></div><div class=\'col-md-6\'><div class=\'form-group\'><input class=\'btn btn-block btn-danger btn-lg\' data-dismiss=\'modal\' type=\'button\' name=\'cancel\' value=\'Cancelar\' /></div></div></div>");
                                                                 $("#myModal").modal({keyboard: false}); }'
                                                         ),
                                                     )
@@ -100,3 +100,23 @@ $this->menu = array(
     </div><!-- /.row -->
 </section>
 <?php $this->renderPartial('../_modal'); ?>
+
+<script>
+    function saveWharehouses(form, hasError) {
+        url = $("#wharehouseclassification-form").attr('action');
+        data = $("#wharehouseclassification-form").serialize();
+        if (!hasError) {
+            // No errors! Do your post and stuff
+            // FYI, this will NOT set $_POST['ajax']... 
+            if(data.length > 0){
+                $.post(url, data, function (res) {
+                    var datos = $.parseJSON(res);
+                    if(datos['estado'] == "success")
+                        $('#myModal').modal('hide');
+                });
+            }
+        }
+        // Always return false so that Yii will never do a traditional form submit
+        return false;
+    }
+</script>

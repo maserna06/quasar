@@ -39,7 +39,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <li>PRODUCTOS</li>
     <li>BODEGAS</li>
 </ul>
-
+</section>
 <?php $this->renderPartial('sliders/slide1', array('model' => $model, 'form' => $form)); ?>
 <?php $this->renderPartial('sliders/slide2', array('products' => $products, 'form' => $form)); ?>
 <?php $this->renderPartial('sliders/slide3', array('wharehouses' => $wharehouses, 'form' => $form)); ?>
@@ -49,7 +49,6 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php $this->renderPartial('../_modal'); ?> 
 
 <?php $this->endWidget(); ?>
-</section>
 
 <script>
     function send(form, hasError) {
@@ -105,6 +104,9 @@ $form = $this->beginWidget('CActiveForm', array(
       }
     }
     $('.small').children('h3').slimScroll({
+      height: '45px'
+    });
+    $('.smalls').children('h3').slimScroll({
       height: '45px'
     });
   });

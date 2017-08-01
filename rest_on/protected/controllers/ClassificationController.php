@@ -213,7 +213,7 @@ class ClassificationController extends Controller {
       $this->redirect(array('site/login'));
 
     $wharehouses = Yii::app()->request->getPost('wharehouse');
-
+    $_err = 0;
     //Save Wharehouse
     if ($wharehouses) {
       $model = new WharehousesClassification;
@@ -224,9 +224,15 @@ class ClassificationController extends Controller {
             'classification_id' => $id,
             'wharehouse_id' => $wharehouse
         ];
-        $model->save();
+        if(!$model->save())
+          $_err = 1;
       }
-      $datosConf = array('estado' => 'success', 'mensaje' => 'Bodegas en Clasificacion configuradas correctamente.');
+      if($_err == 0)
+        $datosConf = array('estado' => 'success', 'mensaje' => 'Bodegas en Clasificacion configuradas correctamente.');
+      else
+        $datosConf = array('estado' => 'danger', 'mensaje' => 'Bodegas en Clasificacion no configuradas correctamente.');
+      print_r(json_encode($datosConf));
+        exit;
     }
 
     $wharehouses = ClassificationExtend::getWharehouses($id);      
