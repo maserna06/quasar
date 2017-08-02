@@ -71,6 +71,11 @@ class UserExtend extends User {
             return $model;
             exit;
         }
+
+        //creando rol
+        $auth = Yii::app()->authManager;
+        if (!$user)
+            $auth->assign('contable', $model->user_id);
         
         return $model;
     }
@@ -111,8 +116,6 @@ class UserExtend extends User {
         $criteria->join="INNER JOIN AuthAssignment a ON a.userid = user_id AND a.itemname <> 'supplier' AND a.itemname <> 'customer'";
 
         $criteria->addCondition('t.user_status in (0,1)');
-        //$criteria->with = array('authassignments' => array('joinType' => 'INNER JOIN', 'together' => true,));
-        //$criteria->compare('t.itemname != "customer"');
         $criteria->compare('user_id', $this->user_id);
         $criteria->compare('user_name', $this->user_name, true);
         $criteria->compare('user_firtsname', $this->user_firtsname, true);

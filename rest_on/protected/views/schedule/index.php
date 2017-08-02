@@ -253,7 +253,8 @@ $form = $this->beginWidget('CActiveForm', array(
                                 $('#calendarSchedule').fullCalendar('removeEvents', id);
                                 $('#calendarSchedule').fullCalendar('renderEvent', eventFull, true);
                                 document.getElementById("schedulemodal-form").reset();
-                                $('#' + id).attr('id', 'null');
+                                //$('#' + id).attr('id', 'null');
+                                id = id + 1;
                                 i = i + 1;
                             }
                         } else {
@@ -274,7 +275,7 @@ $form = $this->beginWidget('CActiveForm', array(
                             $('#calendarSchedule').fullCalendar('removeEvents', id);
                             $('#calendarSchedule').fullCalendar('renderEvent', eventFull, true);
                             document.getElementById("schedulemodal-form").reset();
-                            $('#' + id).attr('id', 'null');
+                            //$('#' + id).attr('id', 'null');
                         }
                     }
                 }
@@ -619,6 +620,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 //Background
                 $("#Schedulemodal_backgroundcolor_modal").val(event.backgroundColor);
                 $("#Schedulemodal_bordercolor_modal").val(event.borderColor);
+                $('#Schedulemodal_repeat').bootstrapToggle('off');
             },
             eventDrop: function (event, delta, revertFunc) {
                 //Create Event Array
