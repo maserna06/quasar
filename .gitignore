@@ -1,4 +1,2 @@
-*.log
-/rest_on/protected/runtime/application.log
-/rest_on/protected/config/database.php
-/rest_on/assets/*
+rest_on/protected/config/database.php
+
