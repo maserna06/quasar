@@ -14,6 +14,18 @@ MenuHelper::setActionId($this->action->id);
 MenuHelper::setActiveClass('active');
 MenuHelper::setOpenClass('menu-open');
 
+//validacion de empresa para mostrar productos para la ficah tecnica
+$empresa = Yii::app()->getSession()->get('empresa');
+$inveFichaTec = InventoryConfig::model()->findAll('company_id='.$empresa);
+$MenuShowHide = 0;
+     if($inveFichaTec)
+     {
+       foreach($inveFichaTec as $inve)
+       {
+        $MenuShowHide = $inve->handle_datasheet;      
+       }
+     }
+     
 $items = [
   array(
     'label'=>'<i class="fa fa-dashboard"></i><span>Inicio</span>',
@@ -99,9 +111,12 @@ $items = [
         'label'=>'<i class="fa fa-circle-o"></i> Categorias',
         'url'=>array('/categories'),
       ),
+      
+      
       array(
         'label'=>'<i class="fa fa-circle-o"></i> Procesos',
         'url'=>array('/process'),
+        'visible'=>$MenuShowHide,
       ),
       array(
         'label'=>'<i class="fa fa-circle-o"></i> Productos',
