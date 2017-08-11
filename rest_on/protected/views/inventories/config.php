@@ -240,6 +240,13 @@ $empresa = Yii::app()->getSession()->get('empresa');
                     $("#myModal").modal('hide');
                     $(".modal-header").removeClass("alert alert-" + datos['estado'])
                 }, 2500);
+                if(datos['MostOcultMenuIzq'] == 0)
+                {
+                    $("#left-menu-process").remove();
+                }else{
+                   $('<li id="left-menu-process"><a href="/yii/rest_on/process"><i class="fa fa-circle-o"></i> Procesos</a></li>').insertAfter("#categorias-menuIzq-process");
+                }
+                
             });
         }
         // Always return false so that Yii will never do a traditional form submit

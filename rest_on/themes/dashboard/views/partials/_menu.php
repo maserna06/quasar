@@ -14,7 +14,7 @@ MenuHelper::setActionId($this->action->id);
 MenuHelper::setActiveClass('active');
 MenuHelper::setOpenClass('menu-open');
 
-//validacion de empresa para mostrar productos para la ficah tecnica
+//mostrar/ocultar Menu procesos segun - ficha tecnica en config inventarios 
 $empresa = Yii::app()->getSession()->get('empresa');
 $inveFichaTec = InventoryConfig::model()->findAll('company_id='.$empresa);
 $MenuShowHide = 0;
@@ -91,9 +91,9 @@ $items = [
   array(
     'label'=>'<i class="fa fa-list-alt"></i><span>Inventarios</span><span class="pull-right-container"><span class="label label-primary pull-right">9</span></span>',
     'url'=>'#',
-    'visible'=>$user->isSupervisor,
+    'visible'=>$user->isSupervisor,    
     'itemOptions'=>array(
-      'class'=>'treeview'
+      'class'=>'treeview'      
     ),
     'submenuOptions'=>[
       'class'=>'treeview-menu',
@@ -110,13 +110,18 @@ $items = [
       array(
         'label'=>'<i class="fa fa-circle-o"></i> Categorias',
         'url'=>array('/categories'),
-      ),
-      
+        'itemOptions'=>array(
+          'id'=>'categorias-menuIzq-process'      
+        ),
+      ),      
       
       array(
         'label'=>'<i class="fa fa-circle-o"></i> Procesos',
         'url'=>array('/process'),
-        'visible'=>$MenuShowHide,
+        'visible'=>$MenuShowHide, 
+        'itemOptions'=>array(
+          'id'=>'left-menu-process'      
+        ),                
       ),
       array(
         'label'=>'<i class="fa fa-circle-o"></i> Productos',

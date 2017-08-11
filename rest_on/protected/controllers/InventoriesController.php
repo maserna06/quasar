@@ -367,7 +367,19 @@ class InventoriesController extends Controller {
             $model2->manage_tables = ($model2->manage_tables == 'on') ? 1 : 0;
             $model2->handle_datasheet = ($model2->handle_datasheet == 'on') ? 1 : 0;
             if ($model2->save()) {
-                $datosConf = array('estado' => 'success', 'mensaje' => 'Configuración para Inventario guardada con éxito.');
+                
+                $empresaMostOculMenuIzq = Yii::app()->getSession()->get('empresa');
+                $inveFichaTec = InventoryConfig::model()->findAll('company_id='.$empresaMostOculMenuIzq);
+                $MenuIzqProc_MostOcul = 0;
+                     if($inveFichaTec)
+                     {
+                       foreach($inveFichaTec as $inve)
+                       {
+                        $MenuIzqProc_MostOcul = $inve->handle_datasheet;      
+                       }
+                     }  
+                     // agregar estado del item processos del menu izquierdo                   
+                     $datosConf = array('estado' => 'success', 'mensaje' => 'Configuración para Inventario guardada con éxito.', 'MostOcultMenuIzq' =>$MenuIzqProc_MostOcul);
             } else {
                 $error = $model2->errors;
                 $key_error = array_keys($error);
